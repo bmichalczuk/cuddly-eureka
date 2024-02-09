@@ -23,9 +23,14 @@ export default function RootLayout({
 				<section className="mx-auto max-w-md p-12 sm:max-w-2xl sm:py-16 md:max-w-4xl lg:max-w-7xl">
 					{children}
 				</section>
-				<footer className="">
-					<Link href="/Regulamin">Regulamin</Link>bmichalczuk @2024{" "}
-					<Link href="/PolitykaPrywatnosci">Polityka Prywatnosci</Link>
+				<footer className="text-center">
+					<Link className="hover:underline" href="/regulamin">
+						Regulamin
+					</Link>
+					<span className="mx-5 font-bold">@2024</span>{" "}
+					<Link className="hover:underline" href="/polityka-prywatnosci">
+						Polityka Prywatnosci
+					</Link>
 				</footer>
 			</body>
 		</html>
