@@ -7,4 +7,9 @@ export type ProductType = {
 		src: string;
 		alt: string;
 	};
+	rating: {
+		rate: number;
+		count: number;
+	};
+	longDescription: string;
 };
