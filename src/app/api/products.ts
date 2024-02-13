@@ -14,7 +14,7 @@ export type ProductApiResponse = {
 	longDescription: string;
 };
 
-const productResponseToProductType = (response: ProductApiResponse): ProductType => {
+const productResponseTypeToProductType = (response: ProductApiResponse): ProductType => {
 	return {
 		name: response.title,
 		id: response.id,
@@ -32,6 +32,12 @@ const productResponseToProductType = (response: ProductApiResponse): ProductType
 export const getProductsList = async () => {
 	const res = await fetch("https://naszsklep-api.vercel.app/api/products");
 	const productsResponse = (await res.json()) as ProductApiResponse[];
-	const products: ProductType[] = productsResponse.map(productResponseToProductType);
+	const products: ProductType[] = productsResponse.map(productResponseTypeToProductType);
 	return products;
+};
+
+export const getProductById = async (id: ProductType["id"]) => {
+	const res = await fetch(`https://naszsklep-api.vercel.app/api/products/${id}`);
+	const productsResponse = (await res.json()) as ProductApiResponse;
+	return productResponseTypeToProductType(productsResponse);
 };
