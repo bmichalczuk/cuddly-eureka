@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { ActiveLink } from "@/app/ui/atoms/ActiveLink";
+import { ActiveLink } from "@ui/atoms/ActiveLink";
 
 export const SiteNavbar = () => {
 	const className = clsx("mx-3", "text-1xl", "text-blue-600", "hover:text-blue-600");

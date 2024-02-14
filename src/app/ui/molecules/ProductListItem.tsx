@@ -11,7 +11,7 @@ export type ProductListItemProps = {
 export const ProductListItem = ({ product }: ProductListItemProps) => {
 	return (
 		<Link href={`/product/${product.id}`}>
-			<article className="border border-gray-300 p-2 shadow-md transition-transform hover:shadow-lg">
+			<article className="flex  flex-col  rounded-md  bg-white ">
 				<ProductListItemImage {...product.coverImage} />
 
 				<ProductListItemDescription {...product} />

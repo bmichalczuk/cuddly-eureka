@@ -9,7 +9,7 @@ export const ProductDescription = ({
 	rating,
 }: ProductType) => {
 	return (
-		<div className="border  p-5">
+		<div className="border">
 			<h2 className="m-2 text-center text-3xl font-bold">{name}</h2>
 			<p>{longDescription}</p>
 			<div className="mt-3 flex flex-row justify-between px-1">
