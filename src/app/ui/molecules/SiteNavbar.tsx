@@ -1,12 +1,11 @@
-import clsx from "clsx";
 import { ActiveLink } from "@ui/atoms/ActiveLink";
 
 export const SiteNavbar = () => {
-	const className = clsx("mx-3", "text-1xl", "text-blue-600", "hover:text-blue-600");
-	const activeClassName = clsx("underline", "transition:transform");
+	const className = "text-lg bg-none px-4 py-2 mx-1 ";
+	const activeClassName = "text-red-400 ";
 	return (
 		<nav>
-			<ul className="flex flex-row justify-around border  p-5 align-middle">
+			<ul className="flex flex-row justify-around   p-5 align-middle">
 				<li className="mx-3">
 					<ActiveLink exact className={className} activeClassName={activeClassName} href="/">
 						Home

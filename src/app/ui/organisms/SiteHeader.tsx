@@ -2,10 +2,10 @@ import Link from "next/link";
 import { SiteNavbar } from "../molecules/SiteNavbar";
 export function SiteHeader() {
 	return (
-		<header className="bg-gray-100-100 flex flex-row justify-around border-b-2  p-5 px-10">
-			<h1>
+		<header className="m-0 flex w-full justify-between bg-slate-700 p-7 text-white">
+			<h1 className="font-serif text-5xl italic text-white">
 				<Link className="text-5xl font-bold italic" title="Go to home page" href="/">
-					Cuddly
+					Cuddly<span className="text-3xl text-red-400">shop</span>
 				</Link>
 			</h1>
 			<SiteNavbar />
