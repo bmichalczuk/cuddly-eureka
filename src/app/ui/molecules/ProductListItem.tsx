@@ -1,8 +1,8 @@
 import Link from "next/link";
-import type { ProductType } from "../types";
+import type { ProductType } from "../../types";
 
-import { ProductListItemImage } from "@/app/ui/atoms/ProductListItemImage";
-import { ProductListItemDescription } from "@/app/ui/atoms/ProductListItemDescription";
+import { ProductListItemImage } from "@/ui/atoms/ProductListItemImage";
+import { ProductListItemDescription } from "@/ui/atoms/ProductListItemDescription";
 
 export type ProductListItemProps = {
 	product: ProductType;
