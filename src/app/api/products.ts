@@ -1,4 +1,4 @@
-import type { ProductType } from "../ui/types";
+import type { ProductType } from "../types";
 
 export type ProductApiResponse = {
 	id: string;
