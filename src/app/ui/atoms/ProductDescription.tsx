@@ -10,7 +10,7 @@ export const ProductDescription = ({
 }: ProductType) => {
 	return (
 		<div className="border p-5">
-			<h2 className="my-5 text-center text-3xl font-bold">{name}</h2>
+			<h1 className="my-5 text-center text-3xl font-bold">{name}</h1>
 			<p className="px-5">{longDescription}</p>
 			<div className="my-3 flex flex-row justify-between px-1">
 				<div className="cursor-pointer font-serif italic hover:underline">{`Category: ${category}`}</div>
