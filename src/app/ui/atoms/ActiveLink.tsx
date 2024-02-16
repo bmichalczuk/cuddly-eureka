@@ -28,7 +28,13 @@ export const ActiveLink = <T extends string>({
 	const isActive = exact ? pathname === href : pathname.startsWith(String(href));
 
 	return (
-		<Link title={title} className={clsx(className, isActive && activeClassName)} href={href}>
+		<Link
+			role="link"
+			title={title}
+			className={clsx(className, isActive && activeClassName)}
+			href={href}
+			aria-current={isActive ? "page" : undefined}
+		>
 			{children}
 		</Link>
 	);

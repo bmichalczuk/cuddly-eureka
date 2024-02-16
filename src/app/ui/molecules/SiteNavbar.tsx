@@ -5,7 +5,7 @@ export const SiteNavbar = () => {
 	const activeClassName = "text-red-400 ";
 	return (
 		<nav>
-			<ul className="flex flex-row justify-around   p-5 align-middle">
+			<ul className="flex flex-row justify-around   p-5 align-middle" role="navigation">
 				<li className="mx-3">
 					<ActiveLink exact className={className} activeClassName={activeClassName} href="/">
 						Home
@@ -18,7 +18,7 @@ export const SiteNavbar = () => {
 						activeClassName={activeClassName}
 						href="/products"
 					>
-						Products
+						All
 					</ActiveLink>
 				</li>
 			</ul>
