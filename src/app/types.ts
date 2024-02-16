@@ -11,5 +11,6 @@ export type ProductType = {
 		rate: number;
 		count: number;
 	};
+	description: string;
 	longDescription: string;
 };

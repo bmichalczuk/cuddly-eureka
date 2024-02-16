@@ -22,6 +22,7 @@ const productResponseTypeToProductType = (response: ProductApiResponse): Product
 		price: response.price,
 		category: response.category,
 		rating: { rate: response.rating.rate, count: response.rating.count },
+		description: response.description,
 		coverImage: {
 			src: response.image,
 			alt: response.title,

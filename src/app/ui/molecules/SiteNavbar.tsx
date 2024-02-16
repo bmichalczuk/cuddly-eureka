@@ -7,7 +7,7 @@ export const SiteNavbar = () => {
 		<nav>
 			<ul className="flex flex-row justify-around   p-5 align-middle" role="navigation">
 				<li className="mx-3">
-					<ActiveLink exact className={className} activeClassName={activeClassName} href="/">
+					<ActiveLink  exact className={className} activeClassName={activeClassName} href="/">
 						Home
 					</ActiveLink>
 				</li>

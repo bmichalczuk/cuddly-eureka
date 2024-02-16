@@ -13,7 +13,7 @@ export async function generateMetadata({
 
 	return {
 		title: product.name,
-		description: product.longDescription,
+		description: product.description,
 	};
 }
 
