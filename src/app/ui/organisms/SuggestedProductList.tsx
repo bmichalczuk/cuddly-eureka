@@ -3,5 +3,10 @@ import { getProductsList } from "@/api/products";
 
 export const SuggestedProductsList = async () => {
 	const products = await getProductsList();
-	return <ProductsList products={products.slice(-4)} />;
+
+	return (
+		<div className="hidden md:block">
+			<ProductsList products={products.slice(-4)} />
+		</div>
+	);
 };

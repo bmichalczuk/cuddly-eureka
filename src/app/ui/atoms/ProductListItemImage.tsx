@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export const ProductListItemImage = ({ alt, src }: { alt: string; src: string }) => {
 	return (
-		<div className="aspect-auto h-72 overflow-hidden rounded-md border ">
+		<div className="aspect-auto  overflow-hidden rounded-md border ">
 			<Image
 				width={320}
 				height={320}
