@@ -5,13 +5,13 @@ export const SiteNavbar = () => {
 	const activeClassName = "text-red-400 ";
 	return (
 		<nav>
-			<ul className="flex flex-row justify-around   p-5 align-middle" role="navigation">
-				<li className="mx-3">
-					<ActiveLink  exact className={className} activeClassName={activeClassName} href="/">
+			<ul className="flex flex-row justify-start p-5 align-middle" role="navigation">
+				<li className="mx-1">
+					<ActiveLink exact className={className} activeClassName={activeClassName} href="/">
 						Home
 					</ActiveLink>
 				</li>
-				<li className="mx-3">
+				<li className="mx-1">
 					<ActiveLink
 						exact
 						className={className}
@@ -19,6 +19,36 @@ export const SiteNavbar = () => {
 						href="/products"
 					>
 						All
+					</ActiveLink>
+				</li>
+				<li className="mx-1">
+					<ActiveLink
+						exact
+						className={className}
+						activeClassName={activeClassName}
+						href="/products"
+					>
+						T-shirts
+					</ActiveLink>
+				</li>
+				<li className="mx-1">
+					<ActiveLink
+						exact
+						className={className}
+						activeClassName={activeClassName}
+						href="/products"
+					>
+						Hoodies
+					</ActiveLink>
+				</li>
+				<li className="mx-1">
+					<ActiveLink
+						exact
+						className={className}
+						activeClassName={activeClassName}
+						href="/products"
+					>
+						Accesories
 					</ActiveLink>
 				</li>
 			</ul>
