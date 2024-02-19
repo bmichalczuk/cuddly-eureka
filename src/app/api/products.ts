@@ -5,7 +5,6 @@ export type ProductApiResponse = {
 	title: string;
 	price: number;
 	description: string;
-	category: string;
 	rating: {
 		rate: number;
 		count: number;
@@ -18,25 +17,110 @@ const productResponseTypeToProductType = (response: ProductApiResponse): Product
 	return {
 		name: response.title,
 		id: response.id,
-		longDescription: response.longDescription,
 		price: response.price,
-		category: response.category,
-		rating: { rate: response.rating.rate, count: response.rating.count },
 		description: response.description,
+		category: response.title,
 		coverImage: {
 			src: response.image,
 			alt: response.title,
 		},
+		rating: response.rating,
 	};
 };
 
-export const getProductsList = async (page = "0", take = "20") => {
-	const res = await fetch(
-		`https://naszsklep-api.vercel.app/api/products?take=${take}&offset=${page}`,
-	);
-	const productsResponse = (await res.json()) as ProductApiResponse[];
-	const products: ProductType[] = productsResponse.map(productResponseTypeToProductType);
-	return products;
+type GraphQLResponseType<T> =
+	| { data?: undefined; errors: { message: string }[] }
+	| { data: T; errors?: undefined };
+
+export type ProductsGraphqlResponse = {
+	products: {
+		data: Array<{
+			id: string;
+			name: string;
+			price: number;
+			rating: number;
+			description: string;
+			images: Array<{
+				url: string;
+				alt: string;
+			}>;
+		}>;
+	};
+};
+
+export type Product = {
+	id: string;
+	name: string;
+	price: number;
+	rating: number;
+	description: string;
+	category: "lorem";
+	images: {
+		url: string;
+	}[];
+};
+
+export type Root = {
+	data: {
+		products: {
+			data: Array<{
+				id: string;
+				name: string;
+				price: number;
+				rating: number;
+				description: string;
+				images: Array<{
+					url: string;
+					alt: string;
+				}>;
+			}>;
+		};
+	};
+};
+
+export const getProductsList = async (): Promise<ProductType[]> => {
+	const res = await fetch(`https://graphql.hyperfunctor.com/graphql`, {
+		method: "POST",
+		body: JSON.stringify({
+			query: /* GraphQL */ `
+				query ProductsGetList {
+					products {
+						data {
+							id
+							images {
+								url
+								alt
+							}
+							name
+							price
+							rating
+							description
+						}
+					}
+				}
+			`,
+		}),
+		headers: { "Content-Type": "application/json" },
+	});
+	const ProductsGraphqlResponse =
+		(await res.json()) as GraphQLResponseType<ProductsGraphqlResponse>;
+
+	if (ProductsGraphqlResponse.errors) {
+		console.log(ProductsGraphqlResponse);
+		throw TypeError(ProductsGraphqlResponse.errors[0].message);
+	}
+
+	return ProductsGraphqlResponse.data?.products.data.map((product) => {
+		return {
+			description: product.description,
+			id: product.id,
+			coverImage: { alt: product.name, src: product.images[0].url },
+			name: product.name,
+			price: product.price,
+			rating: { rate: product.rating, count: 22 },
+			category: "lorem",
+		};
+	});
 };
 
 export const getProductById = async (id: ProductType["id"]) => {

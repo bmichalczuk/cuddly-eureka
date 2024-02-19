@@ -12,5 +12,4 @@ export type ProductType = {
 		count: number;
 	};
 	description: string;
-	longDescription: string;
 };
