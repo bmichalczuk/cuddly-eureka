@@ -16,3 +16,22 @@ query ProductsGetList {
 		}
 	}
 }
+
+query ProductsGetListByCategoryId($id: ID) {
+	category(id: $id) {
+		products {
+			id
+			images {
+				url
+				alt
+			}
+			name
+			price
+			rating
+			description
+			categories {
+				name
+			}
+		}
+	}
+}

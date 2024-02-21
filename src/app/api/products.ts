@@ -1,5 +1,9 @@
-import { ProductsGetListDocument, type TypedDocumentString } from "../../gql/graphql";
-import type { ProductType } from "../types";
+import {
+	ProductsGetListDocument,
+	type TypedDocumentString,
+	ProductsGetListByCategoryIdDocument,
+} from "../../gql/graphql";
+import type { ProductType, ProductsCategories } from "../types";
 
 export const executeGraohql = async <TResult, TVariables>(
 	query: TypedDocumentString<TResult, TVariables>,
@@ -33,6 +37,28 @@ export const executeGraohql = async <TResult, TVariables>(
 export const getProductsList = async (): Promise<ProductType[]> => {
 	const graphqlResponse = await executeGraohql(ProductsGetListDocument, {});
 	return graphqlResponse.products.data.map((product) => {
+		return {
+			description: product.description,
+			id: product.id,
+			coverImage: product.images[0] && { alt: product.name, src: product.images[0]?.url || "" },
+			name: product.name,
+			price: product.price,
+			category: product.categories[0]?.name || "",
+			rating: 3,
+		};
+	});
+};
+
+export const getProductsListByCategoryId = async (
+	id: ProductsCategories,
+): Promise<ProductType[]> => {
+	const graphqlResponse = await executeGraohql(ProductsGetListByCategoryIdDocument, {
+		id: String(id),
+	});
+	if (!graphqlResponse.category) {
+		throw new TypeError("GraphQL error: no such category");
+	}
+	return graphqlResponse.category.products.map((product) => {
 		return {
 			description: product.description,
 			id: product.id,
