@@ -12,7 +12,7 @@ export const ProductListItem = ({ product }: ProductListItemProps) => {
 	return (
 		<Link href={`/product/${product.id}`}>
 			<article className="flex  flex-col  rounded-md">
-				<ProductListItemImage {...product.coverImage} />
+				{product.coverImage && <ProductListItemImage {...product.coverImage} />}
 
 				<ProductListItemDescription {...product} />
 			</article>

@@ -1,4 +1,49 @@
+import { ProductsGetListDocument, type TypedDocumentString } from "../../gql/graphql";
 import type { ProductType } from "../types";
+
+export const executeGraohql = async <TResult, TVariables>(
+	query: TypedDocumentString<TResult, TVariables>,
+	variables: TVariables,
+): Promise<TResult> => {
+	if (!process.env.GRAPHQL_URL) {
+		throw TypeError("GRAPHQL_URL is not defined");
+	}
+	const res = await fetch(process.env.GRAPHQL_URL, {
+		method: "POST",
+		body: JSON.stringify({
+			query,
+			variables,
+		}),
+		headers: { "Content-Type": "application/json" },
+	});
+
+	type GraphQLResponse<T> =
+		| { data?: undefined; errors: { message: string }[] }
+		| { data: T; errors?: undefined };
+
+	const graphqlResponse = (await res.json()) as GraphQLResponse<TResult>;
+
+	if (graphqlResponse.errors) {
+		throw TypeError(`GraphQL Error`, { cause: graphqlResponse.errors });
+	}
+
+	return graphqlResponse.data;
+};
+
+export const getProductsList = async (): Promise<ProductType[]> => {
+	const graphqlResponse = await executeGraohql(ProductsGetListDocument, {});
+	return graphqlResponse.products.data.map((product) => {
+		return {
+			description: product.description,
+			id: product.id,
+			coverImage: product.images[0] && { alt: product.name, src: product.images[0]?.url || "" },
+			name: product.name,
+			price: product.price,
+			category: product.categories[0]?.name || "",
+			rating: 3,
+		};
+	});
+};
 
 export type ProductApiResponse = {
 	id: string;
@@ -24,27 +69,7 @@ const productResponseTypeToProductType = (response: ProductApiResponse): Product
 			src: response.image,
 			alt: response.title,
 		},
-		rating: response.rating,
-	};
-};
-
-type GraphQLResponseType<T> =
-	| { data?: undefined; errors: { message: string }[] }
-	| { data: T; errors?: undefined };
-
-export type ProductsGraphqlResponse = {
-	products: {
-		data: Array<{
-			id: string;
-			name: string;
-			price: number;
-			rating: number;
-			description: string;
-			images: Array<{
-				url: string;
-				alt: string;
-			}>;
-		}>;
+		rating: 3,
 	};
 };
 
@@ -55,7 +80,7 @@ export type Product = {
 	rating: number;
 	description: string;
 	category: "lorem";
-	images: {
+	images?: {
 		url: string;
 	}[];
 };
@@ -76,51 +101,6 @@ export type Root = {
 			}>;
 		};
 	};
-};
-
-export const getProductsList = async (): Promise<ProductType[]> => {
-	const res = await fetch(`https://graphql.hyperfunctor.com/graphql`, {
-		method: "POST",
-		body: JSON.stringify({
-			query: /* GraphQL */ `
-				query ProductsGetList {
-					products {
-						data {
-							id
-							images {
-								url
-								alt
-							}
-							name
-							price
-							rating
-							description
-						}
-					}
-				}
-			`,
-		}),
-		headers: { "Content-Type": "application/json" },
-	});
-	const ProductsGraphqlResponse =
-		(await res.json()) as GraphQLResponseType<ProductsGraphqlResponse>;
-
-	if (ProductsGraphqlResponse.errors) {
-		console.log(ProductsGraphqlResponse);
-		throw TypeError(ProductsGraphqlResponse.errors[0].message);
-	}
-
-	return ProductsGraphqlResponse.data?.products.data.map((product) => {
-		return {
-			description: product.description,
-			id: product.id,
-			coverImage: { alt: product.name, src: product.images[0].url },
-			name: product.name,
-			price: product.price,
-			rating: { rate: product.rating, count: 22 },
-			category: "lorem",
-		};
-	});
 };
 
 export const getProductById = async (id: ProductType["id"]) => {
