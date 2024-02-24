@@ -272,10 +272,24 @@ export type SortDirection =
   | 'ASC'
   | 'DESC';
 
+export type ProductGetByIdQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+
+export type ProductGetByIdQuery = { product?: { id: string, name: string, price: number, rating?: number | null, description: string, images: Array<{ url: string, alt: string }>, categories: Array<{ name: string }> } | null };
+
 export type ProductsGetListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ProductsGetListQuery = { products: { data: Array<{ id: string, name: string, price: number, rating?: number | null, description: string, images: Array<{ url: string, alt: string }>, categories: Array<{ name: string }> }> } };
+
+export type ProductsGetListByCategoryIdQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+
+export type ProductsGetListByCategoryIdQuery = { category?: { products: Array<{ id: string, name: string, price: number, rating?: number | null, description: string, images: Array<{ url: string, alt: string }>, categories: Array<{ name: string }> }> } | null };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -292,6 +306,24 @@ export class TypedDocumentString<TResult, TVariables>
   }
 }
 
+export const ProductGetByIdDocument = new TypedDocumentString(`
+    query ProductGetById($id: ID) {
+  product(id: $id) {
+    id
+    images {
+      url
+      alt
+    }
+    name
+    price
+    rating
+    description
+    categories {
+      name
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<ProductGetByIdQuery, ProductGetByIdQueryVariables>;
 export const ProductsGetListDocument = new TypedDocumentString(`
     query ProductsGetList {
   products {
@@ -312,3 +344,23 @@ export const ProductsGetListDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<ProductsGetListQuery, ProductsGetListQueryVariables>;
+export const ProductsGetListByCategoryIdDocument = new TypedDocumentString(`
+    query ProductsGetListByCategoryId($id: ID) {
+  category(id: $id) {
+    products {
+      id
+      images {
+        url
+        alt
+      }
+      name
+      price
+      rating
+      description
+      categories {
+        name
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<ProductsGetListByCategoryIdQuery, ProductsGetListByCategoryIdQueryVariables>;

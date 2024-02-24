@@ -12,7 +12,8 @@ export type ProductType = {
 };
 
 export enum ProductsCategories {
-	"Accessories" = 1,
-	"Hoodies" = 2,
-	"T-Shirts" = 3,
+	"accesories" = 1,
+	"hoodies" = 2,
+	"t-shirts" = 3,
+	"all" = "all",
 }

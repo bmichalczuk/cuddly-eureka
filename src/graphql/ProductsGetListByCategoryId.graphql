@@ -1,6 +1,6 @@
-query ProductsGetList {
-	products {
-		data {
+query ProductsGetListByCategoryId($id: ID) {
+	category(id: $id) {
+		products {
 			id
 			images {
 				url

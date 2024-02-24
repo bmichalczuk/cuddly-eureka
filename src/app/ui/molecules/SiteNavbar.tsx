@@ -26,7 +26,7 @@ export const SiteNavbar = () => {
 						exact
 						className={className}
 						activeClassName={activeClassName}
-						href="/products"
+						href="/products/t-shirts"
 					>
 						T-shirts
 					</ActiveLink>
@@ -36,7 +36,7 @@ export const SiteNavbar = () => {
 						exact
 						className={className}
 						activeClassName={activeClassName}
-						href="/products"
+						href="/products/hoodies"
 					>
 						Hoodies
 					</ActiveLink>
@@ -46,7 +46,7 @@ export const SiteNavbar = () => {
 						exact
 						className={className}
 						activeClassName={activeClassName}
-						href="/products"
+						href="/products/accesories"
 					>
 						Accesories
 					</ActiveLink>
