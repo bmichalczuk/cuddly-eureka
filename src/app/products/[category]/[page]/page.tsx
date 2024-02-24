@@ -1,6 +1,7 @@
 import { ProductsList } from "@ui/organisms/ProductsList";
-import { getProductsListByCategoryId, getProductsList } from "@/api/products";
-import { ProductsCategories, type ProductType } from "@/types";
+import { getProductsListByCategoryId } from "@/api/products";
+import { ProductsCategories } from "@/types";
+
 export const generateStaticParams = () => {
 	return [
 		{ category: "all" },
@@ -15,12 +16,7 @@ export default async function ProductsPage({
 }: {
 	params: { page: string; category: ProductsCategories };
 }) {
-	let products: ProductType[];
-	if (category === ProductsCategories.all) {
-		products = await getProductsList();
-	} else {
-		products = await getProductsListByCategoryId(Number(ProductsCategories[category]));
-	}
+	const products = await getProductsListByCategoryId(Number(ProductsCategories[category]));
 
 	return (
 		<section className="mx-auto max-w-md  sm:max-w-2xl sm:py-1 xl:max-w-6xl">

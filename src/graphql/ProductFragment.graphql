@@ -1,0 +1,14 @@
+fragment ProductPage on Product {
+	id
+	images {
+		url
+		alt
+	}
+	name
+	price
+	rating
+	description
+	categories {
+		name
+	}
+}

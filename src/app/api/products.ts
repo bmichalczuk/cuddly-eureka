@@ -3,8 +3,9 @@ import {
 	type TypedDocumentString,
 	ProductsGetListByCategoryIdDocument,
 	ProductGetByIdDocument,
+	type ProductListItemFragment,
 } from "../../gql/graphql";
-import type { ProductType, ProductsCategories } from "../types";
+import type { ProductsCategories } from "../types";
 
 export const executeGraohql = async <TResult, TVariables>(
 	query: TypedDocumentString<TResult, TVariables>,
@@ -35,54 +36,29 @@ export const executeGraohql = async <TResult, TVariables>(
 	return graphqlResponse.data;
 };
 
-export const getProductsList = async (): Promise<ProductType[]> => {
+export const getProductsList = async () => {
 	const graphqlResponse = await executeGraohql(ProductsGetListDocument, {});
-	return graphqlResponse.products.data.map((product) => {
-		return {
-			description: product.description,
-			id: product.id,
-			coverImage: product.images[0] && { alt: product.name, src: product.images[0]?.url || "" },
-			name: product.name,
-			price: product.price,
-			category: product.categories[0]?.name || "",
-			rating: 3,
-		};
-	});
+	if (!graphqlResponse.products.data) {
+		throw new TypeError("GraphQL error: no data");
+	}
+	return graphqlResponse.products.data;
 };
 
-export const getProductsListByCategoryId = async (
-	id: ProductsCategories,
-): Promise<ProductType[]> => {
+export const getProductsListByCategoryId = async (id: ProductsCategories) => {
 	const graphqlResponse = await executeGraohql(ProductsGetListByCategoryIdDocument, {
 		id: String(id),
 	});
 	if (!graphqlResponse.category) {
 		throw new TypeError("GraphQL error: no such category");
 	}
-	return graphqlResponse.category.products.map((product) => {
-		return {
-			description: product.description,
-			id: product.id,
-			coverImage: product.images[0] && { alt: product.name, src: product.images[0]?.url || "" },
-			name: product.name,
-			price: product.price,
-			category: product.categories[0]?.name || "",
-			rating: 3,
-		};
-	});
+	return graphqlResponse.category.products;
 };
 
-export const getProductById = async (id: string): Promise<ProductType> => {
+export const getProductById = async (id: ProductListItemFragment["id"]) => {
 	const data = await executeGraohql(ProductGetByIdDocument, { id });
+	console.log(data.product?.images);
 	if (!data.product) {
 		throw new TypeError("GraphQL error: no such products");
 	}
-	return {
-		category: data.product.categories[0]?.name || "",
-		id: data.product.id,
-		description: data.product.description,
-		name: data.product.name,
-		price: data.product.price,
-		rating: 3,
-	};
+	return data.product;
 };
