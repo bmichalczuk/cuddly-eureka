@@ -1,0 +1,12 @@
+import { ProductsList } from "@ui/organisms/ProductsList";
+import { getProductsList } from "@/api/products";
+
+export default async function ProductsPage({ params: { page } }: { params: { page: string } }) {
+	const products = await getProductsList();
+	console.log(products);
+	return (
+		<section className="mx-auto max-w-md  sm:max-w-2xl sm:py-1 xl:max-w-6xl">
+			<ProductsList products={products} />
+		</section>
+	);
+}

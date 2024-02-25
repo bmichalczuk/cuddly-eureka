@@ -26,23 +26,23 @@ const nextConfig = {
 	redirects: async () => {
 		return [
 			{
-				source: "/products/t-shirts",
-				destination: "/products/t-shirts/1",
+				source: "/categories/t-shirts",
+				destination: "/categories/t-shirts/1",
 				permanent: false,
 			},
 			{
-				source: "/products/hoodies",
-				destination: "/products/hoodies/1",
+				source: "/categories/hoodies",
+				destination: "/categories/hoodies/1",
 				permanent: false,
 			},
 			{
-				source: "/products/accesories",
-				destination: "/products/accesories/1",
+				source: "/categories/accesories",
+				destination: "/categories/accesories/1",
 				permanent: false,
 			},
 			{
-				source: "/products/all",
-				destination: "/products/all/1",
+				source: "/products/",
+				destination: "/products/1",
 				permanent: false,
 			},
 		];
