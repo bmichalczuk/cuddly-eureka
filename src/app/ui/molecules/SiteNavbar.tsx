@@ -13,7 +13,7 @@ export const SiteNavbar = () => {
 				</li>
 				<li className="mx-1">
 					<ActiveLink
-						exact
+						exact={false}
 						className={className}
 						activeClassName={activeClassName}
 						href="/products/1"
@@ -23,7 +23,7 @@ export const SiteNavbar = () => {
 				</li>
 				<li className="mx-1">
 					<ActiveLink
-						exact
+						exact={false}
 						className={className}
 						activeClassName={activeClassName}
 						href="/categories/t-shirts/1"
@@ -33,7 +33,7 @@ export const SiteNavbar = () => {
 				</li>
 				<li className="mx-1">
 					<ActiveLink
-						exact
+						exact={false}
 						className={className}
 						activeClassName={activeClassName}
 						href="/categories/hoodies/1"
@@ -43,7 +43,7 @@ export const SiteNavbar = () => {
 				</li>
 				<li className="mx-1">
 					<ActiveLink
-						exact
+						exact={false}
 						className={className}
 						activeClassName={activeClassName}
 						href="/categories/accesories/1"

@@ -16,6 +16,8 @@ type ActiveLinkProps<T extends string> = {
 	title?: string;
 };
 
+const shortenHref = (href: string) => href.slice(0, href.lastIndexOf("/"));
+
 export const ActiveLink = <T extends string>({
 	children,
 	className,
@@ -24,8 +26,7 @@ export const ActiveLink = <T extends string>({
 	href,
 }: ActiveLinkProps<T>) => {
 	const pathname = usePathname();
-
-	const isActive = exact ? pathname === href : pathname.startsWith(String(href));
+	const isActive = exact ? pathname === href : pathname.startsWith(shortenHref(href));
 
 	return (
 		<Link

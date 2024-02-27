@@ -8,7 +8,6 @@ export type ProductListItemProps = {
 };
 
 export const ProductListItem = ({ product }: ProductListItemProps) => {
-	console.log(product.images);
 	return (
 		<Link href={`/product/${product.id}`}>
 			<article className="flex  flex-col  rounded-md">
