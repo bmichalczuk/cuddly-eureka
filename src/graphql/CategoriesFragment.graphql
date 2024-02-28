@@ -1,0 +1,5 @@
+fragment CategoriesFragment on CategoryList {
+	data {
+		name
+	}
+}

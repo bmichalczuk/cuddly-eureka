@@ -272,6 +272,13 @@ export type SortDirection =
   | 'ASC'
   | 'DESC';
 
+export type CategoriesFragmentFragment = { data: Array<{ name: string }> };
+
+export type CategoriesGetListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CategoriesGetListQuery = { categories: { data: Array<{ name: string }> } };
+
 export type ProductPageFragment = { id: string, name: string, price: number, rating?: number | null, description: string, images: Array<{ url: string, alt: string }>, categories: Array<{ name: string }> };
 
 export type ProductGetByIdQueryVariables = Exact<{
@@ -312,6 +319,13 @@ export class TypedDocumentString<TResult, TVariables>
     return this.value;
   }
 }
+export const CategoriesFragmentFragmentDoc = new TypedDocumentString(`
+    fragment CategoriesFragment on CategoryList {
+  data {
+    name
+  }
+}
+    `, {"fragmentName":"CategoriesFragment"}) as unknown as TypedDocumentString<CategoriesFragmentFragment, unknown>;
 export const ProductPageFragmentDoc = new TypedDocumentString(`
     fragment ProductPage on Product {
   id
@@ -342,6 +356,17 @@ export const ProductListItemFragmentDoc = new TypedDocumentString(`
   price
 }
     `, {"fragmentName":"ProductListItem"}) as unknown as TypedDocumentString<ProductListItemFragment, unknown>;
+export const CategoriesGetListDocument = new TypedDocumentString(`
+    query CategoriesGetList {
+  categories {
+    ...CategoriesFragment
+  }
+}
+    fragment CategoriesFragment on CategoryList {
+  data {
+    name
+  }
+}`) as unknown as TypedDocumentString<CategoriesGetListQuery, CategoriesGetListQueryVariables>;
 export const ProductGetByIdDocument = new TypedDocumentString(`
     query ProductGetById($id: ID) {
   product(id: $id) {

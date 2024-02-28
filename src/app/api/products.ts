@@ -4,6 +4,7 @@ import {
 	ProductsGetListByCategoryIdDocument,
 	ProductGetByIdDocument,
 	type ProductListItemFragment,
+	CategoriesGetListDocument,
 } from "../../gql/graphql";
 import type { ProductsCategories } from "../types";
 
@@ -58,9 +59,17 @@ export const getProductsListByCategoryId = async (id: ProductsCategories) => {
 
 export const getProductById = async (id: ProductListItemFragment["id"]) => {
 	const data = await executeGraohql(ProductGetByIdDocument, { id });
-	console.log(data.product?.images);
+
 	if (!data.product) {
 		throw new TypeError("GraphQL error: no such products");
 	}
 	return data.product;
+};
+
+export const getCategoriesList = async () => {
+	const data = await executeGraohql(CategoriesGetListDocument, {});
+	if (!data.categories.data) {
+		throw new TypeError("GraphQL error: no such products");
+	}
+	return data.categories.data;
 };
