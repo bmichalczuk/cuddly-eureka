@@ -283,7 +283,10 @@ export type ProductGetByIdQuery = { product?: { id: string, name: string, price:
 
 export type ProductListItemFragment = { id: string, name: string, price: number, images: Array<{ alt: string, url: string }>, categories: Array<{ name: string }> };
 
-export type ProductsGetListQueryVariables = Exact<{ [key: string]: never; }>;
+export type ProductsGetListQueryVariables = Exact<{
+  take?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+}>;
 
 
 export type ProductsGetListQuery = { products: { data: Array<{ id: string, name: string, price: number, images: Array<{ alt: string, url: string }>, categories: Array<{ name: string }> }> } };
@@ -360,8 +363,8 @@ export const ProductGetByIdDocument = new TypedDocumentString(`
   }
 }`) as unknown as TypedDocumentString<ProductGetByIdQuery, ProductGetByIdQueryVariables>;
 export const ProductsGetListDocument = new TypedDocumentString(`
-    query ProductsGetList {
-  products {
+    query ProductsGetList($take: Int, $skip: Int) {
+  products(take: $take, skip: $skip) {
     data {
       ...ProductListItem
     }

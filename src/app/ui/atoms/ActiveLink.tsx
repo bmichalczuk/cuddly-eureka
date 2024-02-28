@@ -27,7 +27,7 @@ export const ActiveLink = <T extends string>({
 }: ActiveLinkProps<T>) => {
 	const pathname = usePathname();
 	const isActive = exact ? pathname === href : pathname.startsWith(shortenHref(href));
-
+	console.log(`${pathname}: ${href} = ${isActive}`);
 	return (
 		<Link
 			role="link"

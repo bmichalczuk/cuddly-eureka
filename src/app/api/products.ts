@@ -36,8 +36,10 @@ export const executeGraohql = async <TResult, TVariables>(
 	return graphqlResponse.data;
 };
 
-export const getProductsList = async () => {
-	const graphqlResponse = await executeGraohql(ProductsGetListDocument, {});
+export const getProductsList = async (page?: number) => {
+	const gqlVariables = page ? { take: 4, skip: (page - 1) * 4 } : {};
+	console.log(gqlVariables);
+	const graphqlResponse = await executeGraohql(ProductsGetListDocument, gqlVariables);
 	if (!graphqlResponse.products.data) {
 		throw new TypeError("GraphQL error: no data");
 	}
