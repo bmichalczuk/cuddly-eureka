@@ -1,0 +1,8 @@
+query CollectionGetData($slug: String) {
+	collection(slug: $slug) {
+		...Collection
+		products {
+			...ProductListItem
+		}
+	}
+}
