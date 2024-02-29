@@ -1,15 +1,11 @@
 import { ProductsList } from "@ui/organisms/ProductsList";
 import { getProductsList } from "@/api/products";
 import { Pagination } from "@/ui/molecules/Pagination";
-import { createPaginationLinks } from "@/utils";
+import { createPaginationLinks, createPagesParams } from "@/utils";
 
 export const generateStaticParams = async () => {
 	const products = await getProductsList();
-	const numberOfPages = Math.ceil(products.length / 4);
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	return [...new Array(numberOfPages)].map((page, i) => {
-		return { page: String(i) };
-	});
+	return createPagesParams(products);
 };
 const allProducts = await getProductsList();
 
