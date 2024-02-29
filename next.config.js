@@ -45,6 +45,11 @@ const nextConfig = {
 				destination: "/products/1",
 				permanent: false,
 			},
+			{
+				source: "/collections/",
+				destination: "/collections/elegant-extras/",
+				permanent: false,
+			},
 		];
 	},
 };
