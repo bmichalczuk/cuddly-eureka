@@ -272,12 +272,12 @@ export type SortDirection =
   | 'ASC'
   | 'DESC';
 
-export type CategoriesFragmentFragment = { data: Array<{ name: string }> };
+export type CategoriesFragmentFragment = { data: Array<{ name: string, id: string }> };
 
 export type CategoriesGetListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CategoriesGetListQuery = { categories: { data: Array<{ name: string }> } };
+export type CategoriesGetListQuery = { categories: { data: Array<{ name: string, id: string }> } };
 
 export type ProductPageFragment = { id: string, name: string, price: number, rating?: number | null, description: string, images: Array<{ url: string, alt: string }>, categories: Array<{ name: string }> };
 
@@ -299,7 +299,7 @@ export type ProductsGetListQueryVariables = Exact<{
 export type ProductsGetListQuery = { products: { data: Array<{ id: string, name: string, price: number, images: Array<{ alt: string, url: string }>, categories: Array<{ name: string }> }> } };
 
 export type ProductsGetListByCategoryIdQueryVariables = Exact<{
-  id?: InputMaybe<Scalars['ID']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -323,6 +323,7 @@ export const CategoriesFragmentFragmentDoc = new TypedDocumentString(`
     fragment CategoriesFragment on CategoryList {
   data {
     name
+    id
   }
 }
     `, {"fragmentName":"CategoriesFragment"}) as unknown as TypedDocumentString<CategoriesFragmentFragment, unknown>;
@@ -365,6 +366,7 @@ export const CategoriesGetListDocument = new TypedDocumentString(`
     fragment CategoriesFragment on CategoryList {
   data {
     name
+    id
   }
 }`) as unknown as TypedDocumentString<CategoriesGetListQuery, CategoriesGetListQueryVariables>;
 export const ProductGetByIdDocument = new TypedDocumentString(`
@@ -408,8 +410,8 @@ export const ProductsGetListDocument = new TypedDocumentString(`
   price
 }`) as unknown as TypedDocumentString<ProductsGetListQuery, ProductsGetListQueryVariables>;
 export const ProductsGetListByCategoryIdDocument = new TypedDocumentString(`
-    query ProductsGetListByCategoryId($id: ID) {
-  category(id: $id) {
+    query ProductsGetListByCategoryId($slug: String) {
+  category(slug: $slug) {
     products {
       ...ProductListItem
     }

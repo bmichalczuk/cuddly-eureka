@@ -1,7 +1,0 @@
-query ProductsGetListByCategoryId($id: ID) {
-	category(id: $id) {
-		products {
-			...ProductListItem
-		}
-	}
-}

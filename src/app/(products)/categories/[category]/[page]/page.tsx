@@ -1,26 +1,21 @@
 import { ProductsList } from "@ui/organisms/ProductsList";
-import { getProductsListByCategoryId } from "@/api/products";
+import { getProductsListByCategoryName } from "@/api/products";
 import { ProductsCategories } from "@/types";
+import { Pagination } from "@/ui/molecules/Pagination";
+import { createPaginationLinks } from "@/utils";
 
-export const generateStaticParams = () => {
-	return [
-		{ category: "all" },
-		{ category: "t-shirts" },
-		{ category: "accesories" },
-		{ category: "hoodies" },
-	];
+export const generateStaticParams = async ({ params }: { params: { category: string } }) => {
+	const products = await getProductsListByCategoryName(params.category);
+
+	return [{ page: "1" }, { page: "2" }, { page: "3" }];
 };
 
 export default async function ProductsPage({
 	params: { category },
 }: {
-	params: { page: string; category: ProductsCategories };
+	params: { page: string; category: string };
 }) {
-	const products = await getProductsListByCategoryId(Number(ProductsCategories[category]));
+	const products = await getProductsListByCategoryName(category);
 
-	return (
-		<section className="mx-auto max-w-md  sm:max-w-2xl sm:py-1 xl:max-w-6xl">
-			<ProductsList products={products} />
-		</section>
-	);
+	return <ProductsList products={products} />;
 }

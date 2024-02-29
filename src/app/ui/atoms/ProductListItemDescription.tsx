@@ -1,11 +1,11 @@
-import type { ProductListItemFragmentFragment } from "../../../gql/graphql";
+import type { ProductListItemFragment } from "../../../gql/graphql";
 import { formatPrice } from "@/utils";
 
 export const ProductListItemDescription = ({
 	categories,
 	name,
 	price,
-}: ProductListItemFragmentFragment) => {
+}: ProductListItemFragment) => {
 	return (
 		<div className="bg-slate-59 grid flex-1 grid-cols-2 grid-rows-2 px-5 py-5">
 			<h2 className=" col-span-2 mb-3 text-center ">{name}</h2>

@@ -46,9 +46,9 @@ export const SiteNavbar = () => {
 						exact={false}
 						className={className}
 						activeClassName={activeClassName}
-						href="/categories/accesories/1"
+						href="/categories/accessories/1"
 					>
-						Accesories
+						Accessories
 					</ActiveLink>
 				</li>
 			</ul>

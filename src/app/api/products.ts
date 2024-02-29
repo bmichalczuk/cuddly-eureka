@@ -5,8 +5,8 @@ import {
 	ProductGetByIdDocument,
 	type ProductListItemFragment,
 	CategoriesGetListDocument,
+	type CategoriesFragmentFragment,
 } from "../../gql/graphql";
-import type { ProductsCategories } from "../types";
 
 export const executeGraohql = async <TResult, TVariables>(
 	query: TypedDocumentString<TResult, TVariables>,
@@ -39,7 +39,7 @@ export const executeGraohql = async <TResult, TVariables>(
 
 export const getProductsList = async (page?: number) => {
 	const gqlVariables = page ? { take: 4, skip: (page - 1) * 4 } : {};
-	console.log(gqlVariables);
+
 	const graphqlResponse = await executeGraohql(ProductsGetListDocument, gqlVariables);
 	if (!graphqlResponse.products.data) {
 		throw new TypeError("GraphQL error: no data");
@@ -47,9 +47,11 @@ export const getProductsList = async (page?: number) => {
 	return graphqlResponse.products.data;
 };
 
-export const getProductsListByCategoryId = async (id: ProductsCategories) => {
+export const getProductsListByCategoryName = async (
+	name: CategoriesFragmentFragment["data"][0]["name"],
+) => {
 	const graphqlResponse = await executeGraohql(ProductsGetListByCategoryIdDocument, {
-		id: String(id),
+		slug: name,
 	});
 	if (!graphqlResponse.category) {
 		throw new TypeError("GraphQL error: no such category");
