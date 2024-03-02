@@ -6,6 +6,7 @@ import {
 	type ProductListItemFragment,
 	CategoriesGetListDocument,
 	type CategoriesFragmentFragment,
+	ProductsSearchDocument,
 } from "../../gql/graphql";
 
 export const executeGraohql = async <TResult, TVariables>(
@@ -74,4 +75,12 @@ export const getCategoriesList = async () => {
 		throw new TypeError("GraphQL error: no such products");
 	}
 	return data.categories.data;
+};
+
+export const searchProducts = async (search: string) => {
+	const res = await executeGraohql(ProductsSearchDocument, { search: search });
+	if (!res.products.data) {
+		throw new TypeError("GraphQL error: no such products");
+	}
+	return res.products.data;
 };

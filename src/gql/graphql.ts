@@ -179,7 +179,8 @@ export type ProductList = {
 export type ProductSortBy =
   | 'DEFAULT'
   | 'NAME'
-  | 'PRICE';
+  | 'PRICE'
+  | 'RATING';
 
 export type Query = {
   cart?: Maybe<Cart>;
@@ -306,6 +307,8 @@ export type ProductGetByIdQuery = { product?: { id: string, name: string, price:
 
 export type ProductListItemFragment = { id: string, name: string, price: number, images: Array<{ alt: string, url: string }>, categories: Array<{ name: string }> };
 
+export type ProductsSearchFragment = { id: string, name: string, price: number, images: Array<{ alt: string, url: string }>, categories: Array<{ name: string }> };
+
 export type ProductsGetListQueryVariables = Exact<{
   take?: InputMaybe<Scalars['Int']['input']>;
   skip?: InputMaybe<Scalars['Int']['input']>;
@@ -320,6 +323,13 @@ export type ProductsGetListByCategoryIdQueryVariables = Exact<{
 
 
 export type ProductsGetListByCategoryIdQuery = { category?: { products: Array<{ id: string, name: string, price: number, images: Array<{ alt: string, url: string }>, categories: Array<{ name: string }> }> } | null };
+
+export type ProductsSearchQueryVariables = Exact<{
+  search?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type ProductsSearchQuery = { products: { data: Array<{ id: string, name: string, price: number, images: Array<{ alt: string, url: string }>, categories: Array<{ name: string }> }> } };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -401,6 +411,22 @@ export const ProductListItemFragmentDoc = new TypedDocumentString(`
   price
 }
     `, {"fragmentName":"ProductListItem"}) as unknown as TypedDocumentString<ProductListItemFragment, unknown>;
+export const ProductsSearchFragmentDoc = new TypedDocumentString(`
+    fragment ProductsSearch on Product {
+  ...ProductListItem
+}
+    fragment ProductListItem on Product {
+  id
+  name
+  images {
+    alt
+    url
+  }
+  categories {
+    name
+  }
+  price
+}`, {"fragmentName":"ProductsSearch"}) as unknown as TypedDocumentString<ProductsSearchFragment, unknown>;
 export const CategoriesGetListDocument = new TypedDocumentString(`
     query CategoriesGetList {
   categories {
@@ -524,3 +550,26 @@ export const ProductsGetListByCategoryIdDocument = new TypedDocumentString(`
   }
   price
 }`) as unknown as TypedDocumentString<ProductsGetListByCategoryIdQuery, ProductsGetListByCategoryIdQueryVariables>;
+export const ProductsSearchDocument = new TypedDocumentString(`
+    query ProductsSearch($search: String) {
+  products(search: $search) {
+    data {
+      ...ProductsSearch
+    }
+  }
+}
+    fragment ProductListItem on Product {
+  id
+  name
+  images {
+    alt
+    url
+  }
+  categories {
+    name
+  }
+  price
+}
+fragment ProductsSearch on Product {
+  ...ProductListItem
+}`) as unknown as TypedDocumentString<ProductsSearchQuery, ProductsSearchQueryVariables>;
