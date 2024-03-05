@@ -1,0 +1,7 @@
+query ProductsSearch($search: String) {
+	products(search: $search) {
+		data {
+			...ProductsSearch
+		}
+	}
+}

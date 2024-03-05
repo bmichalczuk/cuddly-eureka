@@ -5,20 +5,50 @@ export const SiteNavbar = () => {
 	const activeClassName = "text-red-400 ";
 	return (
 		<nav>
-			<ul className="flex flex-row justify-around   p-5 align-middle" role="navigation">
-				<li className="mx-3">
-					<ActiveLink  exact className={className} activeClassName={activeClassName} href="/">
+			<ul className="flex flex-row justify-start p-5 align-middle" role="navigation">
+				<li className="mx-1">
+					<ActiveLink exact className={className} activeClassName={activeClassName} href="/">
 						Home
 					</ActiveLink>
 				</li>
-				<li className="mx-3">
+				<li className="mx-1">
 					<ActiveLink
-						exact
+						exact={false}
 						className={className}
 						activeClassName={activeClassName}
-						href="/products"
+						href="/products/1"
 					>
 						All
+					</ActiveLink>
+				</li>
+				<li className="mx-1">
+					<ActiveLink
+						exact={false}
+						className={className}
+						activeClassName={activeClassName}
+						href="/categories/t-shirts/1"
+					>
+						T-shirts
+					</ActiveLink>
+				</li>
+				<li className="mx-1">
+					<ActiveLink
+						exact={false}
+						className={className}
+						activeClassName={activeClassName}
+						href="/categories/hoodies/1"
+					>
+						Hoodies
+					</ActiveLink>
+				</li>
+				<li className="mx-1">
+					<ActiveLink
+						exact={false}
+						className={className}
+						activeClassName={activeClassName}
+						href="/categories/accessories/1"
+					>
+						Accessories
 					</ActiveLink>
 				</li>
 			</ul>

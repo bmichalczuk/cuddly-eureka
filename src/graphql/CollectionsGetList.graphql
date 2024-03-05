@@ -1,0 +1,5 @@
+query CollectionsGetList {
+	collections(take: 10) {
+		...CollectionData
+	}
+}

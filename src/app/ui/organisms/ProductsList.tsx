@@ -1,7 +1,7 @@
 import { ProductListItem } from "../molecules/ProductListItem";
-import type { ProductType } from "../../types";
+import type { ProductListItemFragment } from "../../../gql/graphql";
 
-export const ProductsList = ({ products }: { products: ProductType[] }) => {
+export const ProductsList = ({ products }: { products: ProductListItemFragment[] }) => {
 	return (
 		<ul
 			data-testid="products-list"

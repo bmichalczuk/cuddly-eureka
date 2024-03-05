@@ -3,14 +3,17 @@ export type ProductType = {
 	name: string;
 	price: number;
 	category: string;
-	coverImage: {
+	coverImage?: {
 		src: string;
 		alt: string;
 	};
-	rating: {
-		rate: number;
-		count: number;
-	};
+	rating: number;
 	description: string;
-	longDescription: string;
 };
+
+export enum ProductsCategories {
+	"accesories" = 1,
+	"hoodies" = 2,
+	"t-shirts" = 3,
+	"all" = "all",
+}

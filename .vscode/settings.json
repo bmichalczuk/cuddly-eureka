@@ -1,23 +1,22 @@
 {
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "liveServer.settings.donotShowInfoMsg": true,
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"liveServer.settings.donotShowInfoMsg": true,
 
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.codeActionsOnSave": {
-    "source.fixAll": "explicit"
-  },
-  "graphql-config.dotEnvPath": "./.env",
-  "graphql-config.load.configName": "graphql",
-  "files.associations": {
-    "*.css": "tailwindcss"
-  },
-  "editor.quickSuggestions": {
-    "strings": true
-  },
-  "javascript.updateImportsOnFileMove.enabled": "always",
-  "remote.autoForwardPortsSource": "hybrid"
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"editor.formatOnSave": true,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.codeActionsOnSave": {
+		"source.fixAll": "explicit"
+	},
+	"graphql-config.dotEnvPath": "./.env",
+	"files.associations": {
+		"*.css": "tailwindcss"
+	},
+	"editor.quickSuggestions": {
+		"strings": true
+	},
+	"javascript.updateImportsOnFileMove.enabled": "always",
+	"remote.autoForwardPortsSource": "hybrid"
 }

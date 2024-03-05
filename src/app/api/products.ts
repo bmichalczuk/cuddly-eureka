@@ -1,46 +1,86 @@
-import type { ProductType } from "../types";
+import {
+	ProductsGetListDocument,
+	type TypedDocumentString,
+	ProductsGetListByCategoryIdDocument,
+	ProductGetByIdDocument,
+	type ProductListItemFragment,
+	CategoriesGetListDocument,
+	type CategoriesFragmentFragment,
+	ProductsSearchDocument,
+} from "../../gql/graphql";
 
-export type ProductApiResponse = {
-	id: string;
-	title: string;
-	price: number;
-	description: string;
-	category: string;
-	rating: {
-		rate: number;
-		count: number;
-	};
-	image: string;
-	longDescription: string;
+export const executeGraohql = async <TResult, TVariables>(
+	query: TypedDocumentString<TResult, TVariables>,
+	variables: TVariables,
+): Promise<TResult> => {
+	if (!process.env.GRAPHQL_URL) {
+		throw TypeError("GRAPHQL_URL is not defined");
+	}
+	const res = await fetch(process.env.GRAPHQL_URL, {
+		method: "POST",
+		body: JSON.stringify({
+			query,
+			variables,
+		}),
+		headers: { "Content-Type": "application/json" },
+	});
+
+	type GraphQLResponse<T> =
+		| { data?: undefined; errors: { message: string }[] }
+		| { data: T; errors?: undefined };
+
+	const graphqlResponse = (await res.json()) as GraphQLResponse<TResult>;
+
+	if (graphqlResponse.errors) {
+		throw TypeError(`GraphQL Error`, { cause: graphqlResponse.errors });
+	}
+
+	return graphqlResponse.data;
 };
 
-const productResponseTypeToProductType = (response: ProductApiResponse): ProductType => {
-	return {
-		name: response.title,
-		id: response.id,
-		longDescription: response.longDescription,
-		price: response.price,
-		category: response.category,
-		rating: { rate: response.rating.rate, count: response.rating.count },
-		description: response.description,
-		coverImage: {
-			src: response.image,
-			alt: response.title,
-		},
-	};
+export const getProductsList = async (page?: number) => {
+	const gqlVariables = page ? { take: 4, skip: (page - 1) * 4 } : {};
+
+	const graphqlResponse = await executeGraohql(ProductsGetListDocument, gqlVariables);
+	if (!graphqlResponse.products.data) {
+		throw new TypeError("GraphQL error: no data");
+	}
+	return graphqlResponse.products.data;
 };
 
-export const getProductsList = async (page = "0", take = "20") => {
-	const res = await fetch(
-		`https://naszsklep-api.vercel.app/api/products?take=${take}&offset=${page}`,
-	);
-	const productsResponse = (await res.json()) as ProductApiResponse[];
-	const products: ProductType[] = productsResponse.map(productResponseTypeToProductType);
-	return products;
+export const getProductsListByCategoryName = async (
+	name: CategoriesFragmentFragment["data"][0]["name"],
+) => {
+	const graphqlResponse = await executeGraohql(ProductsGetListByCategoryIdDocument, {
+		slug: name,
+	});
+	if (!graphqlResponse.category) {
+		throw new TypeError("GraphQL error: no such category");
+	}
+	return graphqlResponse.category.products;
 };
 
-export const getProductById = async (id: ProductType["id"]) => {
-	const res = await fetch(`https://naszsklep-api.vercel.app/api/products/${id}`);
-	const productsResponse = (await res.json()) as ProductApiResponse;
-	return productResponseTypeToProductType(productsResponse);
+export const getProductById = async (id: ProductListItemFragment["id"]) => {
+	const data = await executeGraohql(ProductGetByIdDocument, { id });
+
+	if (!data.product) {
+		throw new TypeError("GraphQL error: no such products");
+	}
+	return data.product;
+};
+
+export const getCategoriesList = async () => {
+	const data = await executeGraohql(CategoriesGetListDocument, {});
+	if (!data.categories.data) {
+		throw new TypeError("GraphQL error: no such products");
+	}
+	return data.categories.data;
+};
+
+export const searchProducts = async (search: string) => {
+	const res = await executeGraohql(ProductsSearchDocument, { search: search });
+	if (!res.products) {
+		throw new TypeError("GraphQL error: no such products");
+	}
+	return res.products.data;
 };

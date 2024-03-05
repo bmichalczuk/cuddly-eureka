@@ -1,0 +1,17 @@
+fragment Collection on Collection {
+	name
+	description
+	slug
+	products {
+		id
+		name
+		images {
+			alt
+			url
+		}
+		categories {
+			name
+		}
+		price
+	}
+}
