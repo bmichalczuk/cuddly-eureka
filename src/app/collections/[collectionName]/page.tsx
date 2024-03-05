@@ -45,18 +45,3 @@ export default async function CollectionPage({ params }: { params: { collectionN
 		</section>
 	);
 }
-/*
-<Suspense>
-				<ul>
-				{collections.map((collection) => {
-					return (
-						<li key={collection.slug}>
-							<Link href={`/collections/${collection.slug}`}>
-								{collection.name}
-								<p>{collection.description}</p>
-							</Link>
-						</li>
-					);
-				})}
-			</ul>
-			</Suspense>*/

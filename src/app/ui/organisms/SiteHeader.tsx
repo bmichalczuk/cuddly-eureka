@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ShoppingCart } from "lucide-react";
+import { Suspense } from "react";
 import { SiteNavbar } from "../molecules/SiteNavbar";
 import { SearchProductInput } from "../atoms/SearchProductInput";
 export function SiteHeader() {
@@ -11,7 +12,10 @@ export function SiteHeader() {
 				</Link>
 			</div>
 			<SiteNavbar />
-			<SearchProductInput />
+			<Suspense>
+				<SearchProductInput />
+			</Suspense>
+
 			<div className="ml-auto flex flex-row p-5 font-bold">
 				<ShoppingCart />
 				<span className="mx-2">0</span>

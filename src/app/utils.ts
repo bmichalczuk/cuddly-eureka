@@ -25,3 +25,11 @@ export const createPagesParams = (products: ProductListItemFragment[]) => {
 		return { page: String(i) };
 	});
 };
+
+export const withDebounce = (fn: () => void, time = 500) => {
+	let timeout: ReturnType<typeof setTimeout>;
+	return () => {
+		clearTimeout(timeout);
+		timeout = setTimeout(fn, time);
+	};
+};

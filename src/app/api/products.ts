@@ -79,7 +79,7 @@ export const getCategoriesList = async () => {
 
 export const searchProducts = async (search: string) => {
 	const res = await executeGraohql(ProductsSearchDocument, { search: search });
-	if (!res.products.data) {
+	if (!res.products) {
 		throw new TypeError("GraphQL error: no such products");
 	}
 	return res.products.data;

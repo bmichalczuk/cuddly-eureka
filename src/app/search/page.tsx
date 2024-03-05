@@ -8,6 +8,10 @@ export default async function SearchProduct({
 }) {
 	if (!searchParams.search) {
 		return <p className="text-center text-2xl font-bold">No products found</p>;
+	} else if (searchParams.search.length < 2) {
+		return (
+			<p className="text-center text-2xl font-bold">Word must contain at least 2 characters</p>
+		);
 	}
 
 	const products = await searchProducts(searchParams.search);
