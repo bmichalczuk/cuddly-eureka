@@ -1,3 +1,4 @@
+import { type Route } from "next";
 import { ProductsList } from "@ui/organisms/ProductsList";
 import { getProductsListByCategoryName } from "@/api/products";
 import { Pagination } from "@/ui/molecules/Pagination";

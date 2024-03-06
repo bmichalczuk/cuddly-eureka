@@ -19,7 +19,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
 	const categoryList = await getCategoriesList();
 	const title = categoryList.find((obj) => obj.name.toLowerCase() === category)?.name;
-	console.log(title);
+
 	return {
 		title: title,
 	};
