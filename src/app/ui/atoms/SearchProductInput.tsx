@@ -8,7 +8,7 @@ import { withDebounce } from "@/utils";
 export const SearchProductInput = () => {
 	const searchParams = useSearchParams();
 	const searchValue = searchParams.get("search") as string;
-	const [value, setValue] = useState(searchValue);
+	const [value, setValue] = useState(searchValue || "");
 
 	const router = useRouter();
 

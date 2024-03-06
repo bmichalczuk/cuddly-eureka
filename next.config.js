@@ -28,27 +28,27 @@ const nextConfig = {
 			{
 				source: "/categories/t-shirts",
 				destination: "/categories/t-shirts/1",
-				permanent: false,
+				permanent: true,
 			},
 			{
 				source: "/categories/hoodies",
 				destination: "/categories/hoodies/1",
-				permanent: false,
+				permanent: true,
 			},
 			{
 				source: "/categories/accesories",
 				destination: "/categories/accesories/1",
-				permanent: false,
+				permanent: true,
 			},
 			{
-				source: "/products/",
+				source: "/products",
 				destination: "/products/1",
-				permanent: false,
+				permanent: true,
 			},
 			{
-				source: "/collections/",
+				source: "/collections",
 				destination: "/collections/elegant-extras/",
-				permanent: false,
+				permanent: true,
 			},
 		];
 	},
