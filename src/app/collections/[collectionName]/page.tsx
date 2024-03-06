@@ -16,7 +16,7 @@ export default async function CollectionPage({ params }: { params: { collectionN
 	const collection = await getCollectionData(params.collectionName);
 	return (
 		<section className="m-auto max-w-7xl border  p-5 text-slate-700">
-			<h1 className="mb-5 text-center font-serif text-3xl font-bold">{collection.name}</h1>
+			<h2 className="mb-5 text-center font-serif text-3xl font-bold">{collection.name}</h2>
 			<p className="text-xl">{collection.description}</p>
 
 			<ProductsList products={collection.products} />
