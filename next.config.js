@@ -45,11 +45,6 @@ const nextConfig = {
 				destination: "/products/1",
 				permanent: true,
 			},
-			{
-				source: "/collections",
-				destination: "/collections/elegant-extras/",
-				permanent: true,
-			},
 		];
 	},
 };
