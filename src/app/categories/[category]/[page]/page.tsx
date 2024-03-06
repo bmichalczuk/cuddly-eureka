@@ -23,6 +23,9 @@ export default async function ProductsPage({
 
 	return (
 		<>
+			<h2 className="mb-8 text-center text-4xl text-slate-700">
+				{products[0]?.categories[0]?.name}
+			</h2>
 			<Pagination pages={paginationPagesLinks} />
 			<ProductsList products={products} />
 		</>
