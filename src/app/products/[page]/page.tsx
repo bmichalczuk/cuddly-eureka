@@ -1,3 +1,4 @@
+import { type Route } from "next";
 import { ProductsList } from "@ui/organisms/ProductsList";
 import { getProductsList } from "@/api/products";
 import { Pagination } from "@/ui/molecules/Pagination";
@@ -9,7 +10,7 @@ export const generateStaticParams = async () => {
 };
 const allProducts = await getProductsList();
 
-const links = await createPaginationLinks(allProducts, "/products/");
+const links = await createPaginationLinks(allProducts, "/products/" as Route);
 
 export default async function ProductsPage({ params: { page } }: { params: { page: string } }) {
 	const products = await getProductsList(Number(page));
