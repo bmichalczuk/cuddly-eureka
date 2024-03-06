@@ -51,6 +51,16 @@ export const SiteNavbar = () => {
 						Accessories
 					</ActiveLink>
 				</li>
+				<li className="mx-1">
+					<ActiveLink
+						exact={false}
+						className={className}
+						activeClassName={activeClassName}
+						href="/collections"
+					>
+						Collections
+					</ActiveLink>
+				</li>
 			</ul>
 		</nav>
 	);
