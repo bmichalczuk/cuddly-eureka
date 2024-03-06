@@ -1,4 +1,5 @@
 import { type ReactNode } from "react";
+import { type Metadata } from "next";
 import { getCategoriesList } from "@/api/products";
 
 export const generateStaticParams = async () => {
@@ -10,6 +11,19 @@ export const generateStaticParams = async () => {
 	});
 	return params;
 };
+
+export async function generateMetadata({
+	params: { category },
+}: {
+	params: { page: string; category: string };
+}): Promise<Metadata> {
+	const categoryList = await getCategoriesList();
+	const title = categoryList.find((obj) => obj.name.toLowerCase() === category)?.name;
+	console.log(title);
+	return {
+		title: title,
+	};
+}
 
 export default function CategoryLayout({ children }: { children: ReactNode }) {
 	return (

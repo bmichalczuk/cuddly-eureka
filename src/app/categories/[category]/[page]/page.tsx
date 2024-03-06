@@ -1,4 +1,3 @@
-import { type Metadata, type Route } from "next";
 import { ProductsList } from "@ui/organisms/ProductsList";
 import { getProductsListByCategoryName } from "@/api/products";
 import { Pagination } from "@/ui/molecules/Pagination";
@@ -8,16 +7,6 @@ export const generateStaticParams = async ({ params }: { params: { category: str
 	const products = await getProductsListByCategoryName(params.category);
 	return createPagesParams(products);
 };
-
-export async function generateMetadata({
-	params: { category },
-}: {
-	params: { page: string; category: string };
-}): Promise<Metadata> {
-	return {
-		title: category.toUpperCase(),
-	};
-}
 
 export default async function ProductsPage({
 	params: { page, category },
