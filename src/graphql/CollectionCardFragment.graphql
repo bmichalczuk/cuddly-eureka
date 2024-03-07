@@ -1,0 +1,14 @@
+fragment CollectionCard on Collection {
+	name
+	id
+	slug
+	products {
+		images {
+			id
+			height
+			alt
+			url
+			width
+		}
+	}
+}
