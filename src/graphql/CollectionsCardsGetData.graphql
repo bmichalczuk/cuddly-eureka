@@ -1,0 +1,7 @@
+query CollectionsCardsGetData {
+	collections(take: 10) {
+		data {
+			...CollectionCard
+		}
+	}
+}

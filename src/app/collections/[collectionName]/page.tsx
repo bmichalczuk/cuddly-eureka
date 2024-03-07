@@ -1,7 +1,9 @@
 import { Suspense } from "react";
 import Link from "next/link";
+import { type Metadata } from "next";
 import { getCollectionData, getCollectionsList } from "@/api/collections";
 import { ProductsList } from "@/ui/organisms/ProductsList";
+
 export const generateStaticParams = async () => {
 	const res = await getCollectionsList();
 	return res.map((collection) => {
@@ -10,6 +12,20 @@ export const generateStaticParams = async () => {
 		};
 	});
 };
+
+export async function generateMetadata({
+	params: { collectionName },
+}: {
+	params: { collectionName: string };
+}): Promise<Metadata> {
+	const collections = await getCollectionsList();
+	const collection = collections.find((collection) => collection.slug === collectionName);
+	return {
+		title: collection?.name,
+		description: collection?.description,
+	};
+}
+
 const collections = await getCollectionsList();
 
 export default async function CollectionPage({ params }: { params: { collectionName: string } }) {

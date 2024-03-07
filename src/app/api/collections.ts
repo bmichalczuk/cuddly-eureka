@@ -2,6 +2,7 @@ import {
 	type CollectionList,
 	CollectionsGetListDocument,
 	CollectionGetDataDocument,
+	CollectionsCardsGetDataDocument,
 } from "../../gql/graphql";
 import { executeGraohql } from "./products";
 
@@ -22,4 +23,12 @@ export const getCollectionData = async (collectionName: CollectionList["data"][0
 		throw new TypeError("GraphQL error: no products");
 	}
 	return graphqlResponse.collection;
+};
+
+export const getCollectionsCardsData = async () => {
+	const graphqlResponse = await executeGraohql(CollectionsCardsGetDataDocument, {});
+	if (!graphqlResponse.collections) {
+		throw new TypeError("GraphQL error: no collections data");
+	}
+	return graphqlResponse.collections.data;
 };

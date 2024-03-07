@@ -281,6 +281,8 @@ export type CategoriesGetListQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type CategoriesGetListQuery = { categories: { data: Array<{ name: string, id: string }> } };
 
+export type CollectionCardFragment = { name: string, id: string, slug: string, products: Array<{ images: Array<{ id: string, height: number, alt: string, url: string, width: number }> }> };
+
 export type CollectionDataFragment = { data: Array<{ name: string, description: string, slug: string }> };
 
 export type CollectionFragment = { name: string, description: string, slug: string, products: Array<{ id: string, name: string, price: number, images: Array<{ alt: string, url: string }>, categories: Array<{ name: string }> }> };
@@ -291,6 +293,11 @@ export type CollectionGetDataQueryVariables = Exact<{
 
 
 export type CollectionGetDataQuery = { collection?: { name: string, description: string, slug: string, products: Array<{ id: string, name: string, price: number, images: Array<{ alt: string, url: string }>, categories: Array<{ name: string }> }> } | null };
+
+export type CollectionsCardsGetDataQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CollectionsCardsGetDataQuery = { collections: { data: Array<{ name: string, id: string, slug: string, products: Array<{ images: Array<{ id: string, height: number, alt: string, url: string, width: number }> }> }> } };
 
 export type CollectionsGetListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -354,6 +361,22 @@ export const CategoriesFragmentFragmentDoc = new TypedDocumentString(`
   }
 }
     `, {"fragmentName":"CategoriesFragment"}) as unknown as TypedDocumentString<CategoriesFragmentFragment, unknown>;
+export const CollectionCardFragmentDoc = new TypedDocumentString(`
+    fragment CollectionCard on Collection {
+  name
+  id
+  slug
+  products {
+    images {
+      id
+      height
+      alt
+      url
+      width
+    }
+  }
+}
+    `, {"fragmentName":"CollectionCard"}) as unknown as TypedDocumentString<CollectionCardFragment, unknown>;
 export const CollectionDataFragmentDoc = new TypedDocumentString(`
     fragment CollectionData on CollectionList {
   data {
@@ -478,6 +501,28 @@ fragment ProductListItem on Product {
   }
   price
 }`) as unknown as TypedDocumentString<CollectionGetDataQuery, CollectionGetDataQueryVariables>;
+export const CollectionsCardsGetDataDocument = new TypedDocumentString(`
+    query CollectionsCardsGetData {
+  collections(take: 10) {
+    data {
+      ...CollectionCard
+    }
+  }
+}
+    fragment CollectionCard on Collection {
+  name
+  id
+  slug
+  products {
+    images {
+      id
+      height
+      alt
+      url
+      width
+    }
+  }
+}`) as unknown as TypedDocumentString<CollectionsCardsGetDataQuery, CollectionsCardsGetDataQueryVariables>;
 export const CollectionsGetListDocument = new TypedDocumentString(`
     query CollectionsGetList {
   collections(take: 10) {
