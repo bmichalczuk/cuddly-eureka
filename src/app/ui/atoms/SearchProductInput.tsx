@@ -1,6 +1,6 @@
 "use client";
 
-import { type ChangeEventHandler, useState, type FormEvent } from "react";
+import { type ChangeEventHandler, useState } from "react";
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { type Route } from "next";
@@ -21,22 +21,14 @@ export const SearchProductInput = () => {
 		redirectTo(event.target.value.length > 0 ? `/search?search=${event.target.value}` : "/")();
 	};
 
-	console.log(searchParams.toString());
-
-	const handleSearch = (event: FormEvent) => {
-		event.preventDefault();
-		router.replace(`/search?search=${value}`);
-	};
-
 	return (
-		<form action="" onSubmit={handleSearch}>
-			<input
-				className="my-auto ml-auto h-12 rounded-md bg-slate-300 px-2 py-5 text-slate-700 focus:bg-slate-50"
-				type="text"
-				name="Search Product"
-				value={value}
-				onInput={handleInputChange}
-			/>
-		</form>
+		<input
+			className="ml-auto mr-0 h-12 rounded-md bg-slate-300 px-2 py-5 text-slate-700 focus:bg-slate-50"
+			type="text"
+			name="Search Product"
+			value={value}
+			onInput={handleInputChange}
+			role="searchbox"
+		/>
 	);
 };
