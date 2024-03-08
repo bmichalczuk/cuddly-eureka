@@ -18,7 +18,7 @@ export const SearchProductInput = () => {
 		const redirectTo = (path: Route) => withDebounce(() => router.replace(path), 500);
 		setValue(event.target.value);
 
-		redirectTo(event.target.value.length > 0 ? `/search?search=${event.target.value}` : "/")();
+		redirectTo(event.target.value.length > 0 ? `/search?query=${event.target.value}` : "/")();
 	};
 
 	return (
