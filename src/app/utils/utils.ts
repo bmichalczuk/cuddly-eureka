@@ -1,5 +1,5 @@
 import { type Route } from "next";
-import { type ProductListItemFragment } from "../gql/graphql";
+import { type ProductListItemFragment } from "../../gql/graphql";
 
 export const formatPrice = (price: number) => {
 	return new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(price / 100);
@@ -30,6 +30,6 @@ export const withDebounce = (fn: () => void, time = 500) => {
 	let timeout: ReturnType<typeof setTimeout>;
 	return () => {
 		clearTimeout(timeout);
-		return (timeout = setTimeout(fn, time));
+		timeout = setTimeout(fn, time);
 	};
 };
