@@ -1,9 +1,11 @@
 import { Suspense } from "react";
 import { getCollectionsCardsData } from "./api/collections";
 import { CollectionsList } from "./ui/molecules/CollectionsList";
-import { SuggestedProductsList } from "./ui/organisms/SuggestedProductList";
+import { getProductsList } from "./api/products";
+import { ProductsList } from "./ui/organisms/ProductsList";
 
 const collectionList = await getCollectionsCardsData();
+const products = await getProductsList();
 export default function Home() {
 	return (
 		<main>
@@ -14,7 +16,7 @@ export default function Home() {
 			<aside>
 				<h2 className="mb-4 text-4xl">Products you might like:</h2>
 				<Suspense>
-					<SuggestedProductsList />
+					<ProductsList products={products} />
 				</Suspense>
 			</aside>
 		</main>
