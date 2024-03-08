@@ -1,10 +1,11 @@
 "use client";
 
-import { type ChangeEventHandler, useState } from "react";
+import { type ChangeEventHandler, useState, useEffect } from "react";
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { type Route } from "next";
-import { withDebounce } from "@/utils";
+import useDebounce from "@/utils/useDebounce";
+
 export const SearchProductInput = () => {
 	const searchParams = useSearchParams();
 	const searchValue = searchParams.get("search") as string;
@@ -12,14 +13,24 @@ export const SearchProductInput = () => {
 
 	const router = useRouter();
 
+	const debouncedSearch = useDebounce(value, 500);
+
 	const handleInputChange: ChangeEventHandler<HTMLInputElement> = async (event) => {
 		// eslint-disable-next-line prefer-const
 		event.preventDefault();
-		const redirectTo = (path: Route) => withDebounce(() => router.replace(path), 1000);
-		setValue(event.target.value);
 
-		redirectTo(event.target.value.length > 0 ? `/search?query=${event.target.value}` : "/")();
+		setValue(event.target.value);
 	};
+
+	useEffect(() => {
+		const redirectTo = (path: Route) => {
+			console.log(path);
+
+			router.replace(path);
+		};
+		redirectTo(value.length > 0 ? `/search?query=${value}` : "/");
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [debouncedSearch, router]);
 
 	return (
 		<input
@@ -27,7 +38,7 @@ export const SearchProductInput = () => {
 			type="text"
 			name="Search Product"
 			value={value}
-			onInput={handleInputChange}
+			onChange={handleInputChange}
 			role="searchbox"
 		/>
 	);

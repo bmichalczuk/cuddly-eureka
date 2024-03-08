@@ -1,5 +1,5 @@
 import { type ProductPageFragment } from "../../../gql/graphql";
-import { formatPrice } from "@/utils";
+import { formatPrice } from "@/utils/utils";
 
 export const ProductDescription = ({
 	categories,
