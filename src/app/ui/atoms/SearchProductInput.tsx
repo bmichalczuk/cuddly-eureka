@@ -15,7 +15,7 @@ export const SearchProductInput = () => {
 	const handleInputChange: ChangeEventHandler<HTMLInputElement> = async (event) => {
 		// eslint-disable-next-line prefer-const
 		event.preventDefault();
-		const redirectTo = (path: Route) => withDebounce(() => router.replace(path), 500);
+		const redirectTo = (path: Route) => withDebounce(() => router.replace(path), 1000);
 		setValue(event.target.value);
 
 		redirectTo(event.target.value.length > 0 ? `/search?query=${event.target.value}` : "/")();
