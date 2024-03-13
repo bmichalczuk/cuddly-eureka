@@ -1,5 +1,10 @@
 import { cookies } from "next/headers";
-import { CartCreateDocument, type CartFragment, CartGetByIdDocument } from "../../gql/graphql";
+import {
+	CartCreateDocument,
+	type CartFragment,
+	CartGetByIdDocument,
+	CartAddProductDocument,
+} from "../../gql/graphql";
 import { executeGraohql } from "./products";
 
 export const getOrCreateCart = async (): Promise<CartFragment> => {
@@ -17,7 +22,14 @@ export const getOrCreateCart = async (): Promise<CartFragment> => {
 	return cart.cartFindOrCreate;
 };
 
-export const addProductToCart = async (cartId: string, productId: string) => {};
+export const addProductToCart = async (cartId: string, productId: string, quantity = 1) => {
+	const cart = await executeGraohql(CartAddProductDocument, {
+		id: cartId,
+		productId,
+		quantity: quantity,
+	});
+	return cart;
+};
 
 const getCartById = async (cartId: CartFragment["id"]) => {
 	const cart = await executeGraohql(CartGetByIdDocument, { id: cartId });

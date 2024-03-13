@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { ProductCoverImage } from "../atoms/ProductCoverImage";
 import { ProductDescription } from "../atoms/ProductDescription";
-import type { ProductPageFragment } from "../../../gql/graphql";
+import type { ProductFragment } from "../../../gql/graphql";
 import { getOrCreateCart, addProductToCart } from "@/api/cart";
 /*
 const addProductToCartAction = async (formData: FormData) => {
@@ -9,13 +9,18 @@ const addProductToCartAction = async (formData: FormData) => {
 	console.log(formData);
 };*/
 
-export const Product = ({ product }: { product: ProductPageFragment }) => {
+export const Product = ({ product }: { product: ProductFragment }) => {
 	const addProductToCartAction = async () => {
 		"use server";
 		const cart = await getOrCreateCart();
-		cookies().set("cartId", cart.id);
+		cookies().set("cartId", cart.id, {
+			httpOnly: true,
+			sameSite: "lax",
+			//secure: true,
+		});
+		await addProductToCart(cart.id, product.id);
+
 		console.log(cart);
-		//await addProductToCart(cart.id, product.id);
 	};
 	return (
 		<article className="lg:max-w-8xl mt-auto grid grid-cols-1 lg:m-12  lg:grid-cols-2 ">

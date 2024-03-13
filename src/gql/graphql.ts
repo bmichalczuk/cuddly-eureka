@@ -274,6 +274,15 @@ export type SortDirection =
   | 'ASC'
   | 'DESC';
 
+export type CartAddProductMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  productId: Scalars['String']['input'];
+  quantity?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type CartAddProductMutation = { cartAddItem: { id: string, items: Array<{ quantity: number, product: { id: string, name: string, price: number, rating?: number | null, description: string, images: Array<{ url: string, alt: string }>, categories: Array<{ name: string }> } }> } };
+
 export type CartCreateMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']['input']>;
 }>;
@@ -320,7 +329,7 @@ export type CollectionsGetListQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type CollectionsGetListQuery = { collections: { data: Array<{ name: string, description: string, slug: string }> } };
 
-export type ProductPageFragment = { id: string, name: string, price: number, rating?: number | null, description: string, images: Array<{ url: string, alt: string }>, categories: Array<{ name: string }> };
+export type ProductFragment = { id: string, name: string, price: number, rating?: number | null, description: string, images: Array<{ url: string, alt: string }>, categories: Array<{ name: string }> };
 
 export type ProductGetByIdQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ID']['input']>;
@@ -439,8 +448,8 @@ export const CollectionFragmentDoc = new TypedDocumentString(`
   }
 }
     `, {"fragmentName":"Collection"}) as unknown as TypedDocumentString<CollectionFragment, unknown>;
-export const ProductPageFragmentDoc = new TypedDocumentString(`
-    fragment ProductPage on Product {
+export const ProductFragmentDoc = new TypedDocumentString(`
+    fragment Product on Product {
   id
   images {
     url
@@ -454,7 +463,7 @@ export const ProductPageFragmentDoc = new TypedDocumentString(`
     name
   }
 }
-    `, {"fragmentName":"ProductPage"}) as unknown as TypedDocumentString<ProductPageFragment, unknown>;
+    `, {"fragmentName":"Product"}) as unknown as TypedDocumentString<ProductFragment, unknown>;
 export const ProductListItemFragmentDoc = new TypedDocumentString(`
     fragment ProductListItem on Product {
   id
@@ -485,6 +494,35 @@ export const ProductsSearchFragmentDoc = new TypedDocumentString(`
   }
   price
 }`, {"fragmentName":"ProductsSearch"}) as unknown as TypedDocumentString<ProductsSearchFragment, unknown>;
+export const CartAddProductDocument = new TypedDocumentString(`
+    mutation CartAddProduct($id: ID!, $productId: String!, $quantity: Int) {
+  cartAddItem(
+    id: $id
+    input: {item: {productId: $productId, quantity: $quantity}}
+  ) {
+    id
+    items {
+      product {
+        ...Product
+      }
+      quantity
+    }
+  }
+}
+    fragment Product on Product {
+  id
+  images {
+    url
+    alt
+  }
+  name
+  price
+  rating
+  description
+  categories {
+    name
+  }
+}`) as unknown as TypedDocumentString<CartAddProductMutation, CartAddProductMutationVariables>;
 export const CartCreateDocument = new TypedDocumentString(`
     mutation CartCreate($id: ID) {
   cartFindOrCreate(input: {}, id: $id) {
@@ -617,10 +655,10 @@ export const CollectionsGetListDocument = new TypedDocumentString(`
 export const ProductGetByIdDocument = new TypedDocumentString(`
     query ProductGetById($id: ID) {
   product(id: $id) {
-    ...ProductPage
+    ...Product
   }
 }
-    fragment ProductPage on Product {
+    fragment Product on Product {
   id
   images {
     url
