@@ -1,6 +1,8 @@
+import { cookies } from "next/headers";
 import { ProductCoverImage } from "../atoms/ProductCoverImage";
 import { ProductDescription } from "../atoms/ProductDescription";
 import type { ProductPageFragment } from "../../../gql/graphql";
+import { getOrCreateCart, addProductToCart } from "@/api/cart";
 /*
 const addProductToCartAction = async (formData: FormData) => {
 	"use server";
@@ -10,7 +12,10 @@ const addProductToCartAction = async (formData: FormData) => {
 export const Product = ({ product }: { product: ProductPageFragment }) => {
 	const addProductToCartAction = async () => {
 		"use server";
-		console.log(product.name);
+		const cart = await getOrCreateCart();
+		cookies().set("cartId", cart.id);
+		console.log(cart);
+		//await addProductToCart(cart.id, product.id);
 	};
 	return (
 		<article className="lg:max-w-8xl mt-auto grid grid-cols-1 lg:m-12  lg:grid-cols-2 ">
