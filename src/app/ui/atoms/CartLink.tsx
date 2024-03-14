@@ -1,6 +1,7 @@
 import { ShoppingCart } from "lucide-react";
 import { cookies } from "next/headers";
 import Link from "next/link";
+import { ActiveLink } from "./ActiveLink";
 import { getCartById } from "@/api/cart";
 
 export const CartLink = async () => {
@@ -17,13 +18,15 @@ export const CartLink = async () => {
 	const { cart } = await getCartById(cartId);
 
 	return (
-		<Link
+		<ActiveLink
 			href="/cart"
 			title="Go to cart"
-			className="mx-5  flex flex-row items-center justify-center rounded-md p-5 align-middle font-bold  hover:bg-slate-600 focus:bg-slate-600"
+			className="mx-5 flex flex-row items-center justify-center rounded-md p-5 align-middle text-lg font-bold  hover:bg-slate-600 focus:bg-slate-600"
+			activeClassName="text-red-400"
+			exact
 		>
 			<ShoppingCart />
-			<span className="">({(cart && cart.items.length) || 0})</span>
-		</Link>
+			<span className="ml-1">({(cart && cart.items.length) || 0})</span>
+		</ActiveLink>
 	);
 };
