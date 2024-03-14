@@ -5,7 +5,7 @@ import {
 	CartGetByIdDocument,
 	CartAddProductDocument,
 } from "../../gql/graphql";
-import { executeGraohql } from "./products";
+import { executeGraohql } from "@/utils/utils";
 
 export const getOrCreateCart = async (): Promise<CartFragment> => {
 	const cartId = cookies().get("cartId")?.value;
@@ -31,7 +31,7 @@ export const addProductToCart = async (cartId: string, productId: string, quanti
 	return cart;
 };
 
-const getCartById = async (cartId: CartFragment["id"]) => {
+export const getCartById = async (cartId: CartFragment["id"]) => {
 	const cart = await executeGraohql(CartGetByIdDocument, { id: cartId });
 	return cart;
 };

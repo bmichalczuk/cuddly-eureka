@@ -4,7 +4,7 @@ import {
 	CollectionGetDataDocument,
 	CollectionsCardsGetDataDocument,
 } from "../../gql/graphql";
-import { executeGraohql } from "./products";
+import { executeGraohql } from "@/utils/utils";
 
 export const getCollectionsList = async () => {
 	const graphqlResponse = await executeGraohql(CollectionsGetListDocument, {});

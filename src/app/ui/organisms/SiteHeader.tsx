@@ -1,8 +1,10 @@
 import Link from "next/link";
-import { ShoppingCart } from "lucide-react";
 import { Suspense } from "react";
 import { SiteNavbar } from "../molecules/SiteNavbar";
 import { SearchProductInput } from "../atoms/SearchProductInput";
+
+import { CartLink } from "../atoms/CartLink";
+
 export function SiteHeader() {
 	return (
 		<header className="flex w-full flex-row items-center  bg-slate-700 p-7 px-16 text-white">
@@ -16,10 +18,7 @@ export function SiteHeader() {
 				<SearchProductInput />
 			</Suspense>
 
-			<div className="ml-1 flex flex-row p-5 font-bold">
-				<ShoppingCart />
-				<span className="mx-2">0</span>
-			</div>
+			<CartLink />
 		</header>
 	);
 }
