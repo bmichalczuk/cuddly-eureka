@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Image from "next/image";
+import { IncrementProductQuantity } from "./IncrementProductQuantity";
 import { formatPrice } from "@/utils/utils";
 import { getCartById } from "@/api/cart";
 
@@ -49,7 +50,15 @@ export default async function CartPage() {
 									)}
 									{item.product.name}
 								</td>
-								<td className="px-10 py-3 text-center">{item.quantity}</td>
+								<td className="px-10 py-3 text-center">
+									{item.quantity}{" "}
+									<IncrementProductQuantity
+										quantity={item.quantity}
+										productId={item.product.id}
+										cartId={cart.id}
+									/>
+								</td>
+
 								<td className="px-10 py-3">{formatPrice(item.product.price)}</td>
 							</tr>
 						);
