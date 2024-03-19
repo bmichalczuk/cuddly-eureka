@@ -19,6 +19,12 @@ export const getOrCreateCart = async (): Promise<CartFragment> => {
 	if (!cart.cartFindOrCreate) {
 		throw new Error("Failed to create cart");
 	}
+	cookies().set("cartId", cart.cartFindOrCreate.id, {
+		httpOnly: true,
+		sameSite: "lax",
+		//secure: true
+	});
+
 	return cart.cartFindOrCreate;
 };
 

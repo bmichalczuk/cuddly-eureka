@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import { ProductCoverImage } from "../atoms/ProductCoverImage";
 import { ProductDescription } from "../atoms/ProductDescription";
 import type { ProductFragment } from "../../../gql/graphql";
@@ -14,11 +13,7 @@ export const Product = ({ product }: { product: ProductFragment }) => {
 	const addProductToCartAction = async () => {
 		"use server";
 		const cart = await getOrCreateCart();
-		cookies().set("cartId", cart.id, {
-			httpOnly: true,
-			sameSite: "lax",
-			//secure: true,
-		});
+
 		await addProductToCart(cart.id, product.id);
 	};
 	return (

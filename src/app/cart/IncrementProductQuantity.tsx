@@ -15,7 +15,6 @@ export const IncrementProductQuantity = ({
 
 	return (
 		<form>
-			{optimisticQuantity}
 			<button
 				type="submit"
 				className="ml-2 h-8 w-8 border bg-slate-50"
