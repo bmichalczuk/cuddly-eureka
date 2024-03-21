@@ -14,10 +14,10 @@ export const ProductQuantity = ({
 	const [optimisticQuantity, setOptimisticQuantity] = useOptimistic(quantity);
 
 	return (
-		<form>
+		<form className="flex flex-row items-center justify-between">
 			<button
 				type="submit"
-				className="ml-2 h-8 w-8 border bg-slate-50"
+				className="h-8 w-8 border bg-slate-50"
 				formAction={async () => {
 					setOptimisticQuantity(optimisticQuantity - 1);
 					await changeProductQuantity(cartId, productId, optimisticQuantity - 1);
@@ -25,10 +25,10 @@ export const ProductQuantity = ({
 			>
 				-
 			</button>
-			{optimisticQuantity}
+			<span className=" m-3 inline-block w-10   text-center">{optimisticQuantity}</span>
 			<button
 				type="submit"
-				className="ml-2 h-8 w-8 border bg-slate-50"
+				className="h-8 w-8 border bg-slate-50"
 				formAction={async () => {
 					setOptimisticQuantity(optimisticQuantity + 1);
 					await changeProductQuantity(cartId, productId, optimisticQuantity + 1);

@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import { ProductQuantity } from "./ProductQuantity";
+import { RemoveButton } from "./RemoveProductBtn";
 import { formatPrice } from "@/utils/utils";
 import { getCartById } from "@/api/cart";
 
@@ -29,6 +30,7 @@ export default async function CartPage() {
 						<th className="px-10 py-3">Product</th>
 						<th className="px-10 py-3">Quantity</th>
 						<th className="px-10 py-3">Price</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -59,6 +61,9 @@ export default async function CartPage() {
 								</td>
 
 								<td className="px-10 py-3">{formatPrice(item.product.price)}</td>
+								<td className="px-10 py-3">
+									<RemoveButton cartId={cart.id} productId={item.product.id} />
+								</td>
 							</tr>
 						);
 					})}

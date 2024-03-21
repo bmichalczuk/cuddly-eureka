@@ -30,12 +30,12 @@ export const executeGraohql = async <TResult, TVariables>({
 	query,
 	variables,
 	next,
-	cashe,
+	cache,
 }: {
 	query: TypedDocumentString<TResult, TVariables>;
 	variables: TVariables;
 	next?: NextFetchRequestConfig;
-	cashe?: RequestCache;
+	cache?: RequestCache;
 }): Promise<TResult> => {
 	if (!process.env.GRAPHQL_URL) {
 		throw TypeError("GRAPHQL_URL is not defined");
@@ -48,7 +48,7 @@ export const executeGraohql = async <TResult, TVariables>({
 		}),
 		headers: { "Content-Type": "application/json" },
 		next,
-		cashe,
+		cache,
 	});
 
 	type GraphQLResponse<T> =

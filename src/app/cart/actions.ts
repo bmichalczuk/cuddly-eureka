@@ -1,7 +1,12 @@
 "use server";
 
 import { revalidateTag } from "next/cache";
-import { CartSetProductQuantityDocument } from "../../gql/graphql";
+import {
+	CartSetProductQuantityDocument,
+	CartRemoveProductDocument,
+	type CartFragment,
+	type ProductFragment,
+} from "../../gql/graphql";
 import { executeGraohql } from "@/utils/utils";
 
 export const changeProductQuantity = async (
@@ -14,4 +19,11 @@ export const changeProductQuantity = async (
 		variables: { cartId, productId, quantity },
 	});
 	revalidateTag("cart");
+};
+
+export const removeProductFromCart = async (
+	cartId: CartFragment["id"],
+	productId: ProductFragment["id"],
+) => {
+	await executeGraohql({ variables: { productId, cartId }, query: CartRemoveProductDocument });
 };
