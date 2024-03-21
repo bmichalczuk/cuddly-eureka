@@ -1,3 +1,4 @@
+import { revalidateTag } from "next/cache";
 import { ProductCoverImage } from "../atoms/ProductCoverImage";
 import { ProductDescription } from "../atoms/ProductDescription";
 import type { ProductFragment } from "../../../gql/graphql";
@@ -15,6 +16,8 @@ export const Product = ({ product }: { product: ProductFragment }) => {
 		const cart = await getOrCreateCart();
 
 		await addProductToCart(cart.id, product.id);
+
+		revalidateTag("cart");
 	};
 	return (
 		<article className="lg:max-w-8xl mt-auto grid grid-cols-1 lg:m-12  lg:grid-cols-2 ">

@@ -2,7 +2,7 @@
 import { useOptimistic } from "react";
 import { changeProductQuantity } from "./actions";
 
-export const IncrementProductQuantity = ({
+export const ProductQuantity = ({
 	productId,
 	cartId,
 	quantity,
@@ -15,6 +15,17 @@ export const IncrementProductQuantity = ({
 
 	return (
 		<form>
+			<button
+				type="submit"
+				className="ml-2 h-8 w-8 border bg-slate-50"
+				formAction={async () => {
+					setOptimisticQuantity(optimisticQuantity - 1);
+					await changeProductQuantity(cartId, productId, optimisticQuantity - 1);
+				}}
+			>
+				-
+			</button>
+			{optimisticQuantity}
 			<button
 				type="submit"
 				className="ml-2 h-8 w-8 border bg-slate-50"

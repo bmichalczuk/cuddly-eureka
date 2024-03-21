@@ -26,10 +26,17 @@ export const createPagesParams = (products: ProductListItemFragment[]) => {
 	});
 };
 
-export const executeGraohql = async <TResult, TVariables>(
-	query: TypedDocumentString<TResult, TVariables>,
-	variables: TVariables,
-): Promise<TResult> => {
+export const executeGraohql = async <TResult, TVariables>({
+	query,
+	variables,
+	next,
+	cashe,
+}: {
+	query: TypedDocumentString<TResult, TVariables>;
+	variables: TVariables;
+	next?: NextFetchRequestConfig;
+	cashe?: RequestCache;
+}): Promise<TResult> => {
 	if (!process.env.GRAPHQL_URL) {
 		throw TypeError("GRAPHQL_URL is not defined");
 	}
@@ -40,6 +47,8 @@ export const executeGraohql = async <TResult, TVariables>(
 			variables,
 		}),
 		headers: { "Content-Type": "application/json" },
+		next,
+		cashe,
 	});
 
 	type GraphQLResponse<T> =

@@ -7,7 +7,10 @@ import {
 import { executeGraohql } from "@/utils/utils";
 
 export const getCollectionsList = async () => {
-	const graphqlResponse = await executeGraohql(CollectionsGetListDocument, {});
+	const graphqlResponse = await executeGraohql({
+		query: CollectionsGetListDocument,
+		variables: {},
+	});
 	if (!graphqlResponse.collections) {
 		throw new TypeError("GraphQL error: no data");
 	}
@@ -15,8 +18,11 @@ export const getCollectionsList = async () => {
 };
 
 export const getCollectionData = async (collectionName: CollectionList["data"][0]["slug"]) => {
-	const graphqlResponse = await executeGraohql(CollectionGetDataDocument, {
-		slug: collectionName,
+	const graphqlResponse = await executeGraohql({
+		query: CollectionGetDataDocument,
+		variables: {
+			slug: collectionName,
+		},
 	});
 
 	if (!graphqlResponse.collection) {
@@ -26,7 +32,10 @@ export const getCollectionData = async (collectionName: CollectionList["data"][0
 };
 
 export const getCollectionsCardsData = async () => {
-	const graphqlResponse = await executeGraohql(CollectionsCardsGetDataDocument, {});
+	const graphqlResponse = await executeGraohql({
+		query: CollectionsCardsGetDataDocument,
+		variables: {},
+	});
 	if (!graphqlResponse.collections) {
 		throw new TypeError("GraphQL error: no collections data");
 	}

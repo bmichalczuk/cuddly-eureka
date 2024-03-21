@@ -306,7 +306,7 @@ export type CartSetProductQuantityMutationVariables = Exact<{
 }>;
 
 
-export type CartSetProductQuantityMutation = { cartChangeItemQuantity: { id: string } };
+export type CartSetProductQuantityMutation = { cartChangeItemQuantity: { id: string, items: Array<{ quantity: number }> } };
 
 export type CategoriesFragmentFragment = { data: Array<{ name: string, id: string }> };
 
@@ -580,6 +580,9 @@ export const CartSetProductQuantityDocument = new TypedDocumentString(`
     mutation CartSetProductQuantity($cartId: ID!, $productId: ID!, $quantity: Int!) {
   cartChangeItemQuantity(id: $cartId, productId: $productId, quantity: $quantity) {
     id
+    items {
+      quantity
+    }
   }
 }
     `) as unknown as TypedDocumentString<CartSetProductQuantityMutation, CartSetProductQuantityMutationVariables>;

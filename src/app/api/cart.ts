@@ -4,6 +4,7 @@ import {
 	type CartFragment,
 	CartGetByIdDocument,
 	CartAddProductDocument,
+	type ProductFragment,
 } from "../../gql/graphql";
 import { executeGraohql } from "@/utils/utils";
 
@@ -28,21 +29,32 @@ export const getOrCreateCart = async (): Promise<CartFragment> => {
 	return cart.cartFindOrCreate;
 };
 
-export const addProductToCart = async (cartId: string, productId: string, quantity = 1) => {
-	const cart = await executeGraohql(CartAddProductDocument, {
-		id: cartId,
-		productId,
-		quantity: quantity,
+export const addProductToCart = async (
+	cartId: CartFragment["id"],
+	productId: ProductFragment["id"],
+	quantity = 1,
+) => {
+	const cart = await executeGraohql({
+		query: CartAddProductDocument,
+		variables: {
+			id: cartId,
+			productId,
+			quantity: quantity,
+		},
 	});
 	return cart;
 };
 
 export const getCartById = async (cartId: CartFragment["id"]) => {
-	const cart = await executeGraohql(CartGetByIdDocument, { id: cartId });
+	const cart = await executeGraohql({
+		query: CartGetByIdDocument,
+		variables: { id: cartId },
+		next: { tags: ["cart"] },
+	});
 	return cart;
 };
 
 async function createCart(id?: CartFragment["id"]) {
-	const cart = await executeGraohql(CartCreateDocument, { id: id });
+	const cart = await executeGraohql({ query: CartCreateDocument, variables: { id: id } });
 	return cart;
 }
