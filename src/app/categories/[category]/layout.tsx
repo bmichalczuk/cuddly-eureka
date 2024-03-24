@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 import { type Metadata } from "next";
-import { getCategoriesList } from "@/api/products";
+import { getCategoriesList } from "../../../api/products";
 
 export const generateStaticParams = async () => {
 	const categoriesList = await getCategoriesList();

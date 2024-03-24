@@ -1,10 +1,10 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Image from "next/image";
+import { getCartById } from "../../api/cart";
 import { ProductQuantity } from "./ProductQuantity";
 import { RemoveButton } from "./RemoveProductBtn";
 import { formatPrice } from "@/utils/utils";
-import { getCartById } from "@/api/cart";
 
 export default async function CartPage() {
 	const cartId = cookies().get("cartId")?.value;

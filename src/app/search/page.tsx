@@ -1,4 +1,4 @@
-import { searchProducts } from "@/api/products";
+import { searchProducts } from "../../api/products";
 import { ProductsList } from "@/ui/organisms/ProductsList";
 
 export default async function SearchProduct({ searchParams }: { searchParams: { query: string } }) {

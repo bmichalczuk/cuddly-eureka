@@ -3,7 +3,7 @@ import { ProductCoverImage } from "../atoms/ProductCoverImage";
 import { ProductDescription } from "../atoms/ProductDescription";
 import type { ProductFragment } from "../../../gql/graphql";
 import { AddToCartButton } from "../atoms/AddCartButton";
-import { getOrCreateCart, addProductToCart } from "@/api/cart";
+import { getOrCreateCart, addProductToCart } from "../../../api/cart";
 /*
 const addProductToCartAction = async (formData: FormData) => {
 	"use server";
