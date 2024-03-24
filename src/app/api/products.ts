@@ -15,6 +15,9 @@ export const getProductsList = async (page?: number) => {
 	const graphqlResponse = await executeGraohql({
 		query: ProductsGetListDocument,
 		variables: gqlVariables,
+		next: {
+			revalidate: 15,
+		},
 	});
 	if (!graphqlResponse.products.data) {
 		throw new TypeError("GraphQL error: no data");
@@ -38,7 +41,11 @@ export const getProductsListByCategoryName = async (
 };
 
 export const getProductById = async (id: ProductListItemFragment["id"]) => {
-	const data = await executeGraohql({ query: ProductGetByIdDocument, variables: { id } });
+	const data = await executeGraohql({
+		query: ProductGetByIdDocument,
+		variables: { id },
+		next: { revalidate: 1 },
+	});
 
 	if (!data.product) {
 		throw new TypeError("GraphQL error: no such products");

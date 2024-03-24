@@ -41,6 +41,7 @@ export const addProductToCart = async (
 			productId,
 			quantity: quantity,
 		},
+		cache: "no-store",
 	});
 	return cart;
 };
@@ -50,6 +51,7 @@ export const getCartById = async (cartId: CartFragment["id"]) => {
 		query: CartGetByIdDocument,
 		variables: { id: cartId },
 		next: { tags: ["cart"] },
+		cache: "no-store",
 	});
 	return cart;
 };
