@@ -9,24 +9,36 @@ import {
 import { executeGraohql } from "@/utils/utils";
 
 export const getOrCreateCart = async (): Promise<CartFragment> => {
-	const cartId = cookies().get("cartId")?.value;
-	if (cartId) {
-		const cart = await getCartById(cartId);
-		if (cart.cart) {
-			return cart.cart;
-		}
+	const cart = await getCart();
+	if (cart?.cart) {
+		return cart.cart;
 	}
-	const cart = await createCart(cartId);
-	if (!cart.cartFindOrCreate) {
+
+	const cartId = cookies().get("cartId")?.value;
+	const newCart = await createCart(cartId);
+	if (!newCart.cartFindOrCreate) {
 		throw new Error("Failed to create cart");
 	}
-	cookies().set("cartId", cart.cartFindOrCreate.id, {
+	cookies().set("cartId", newCart.cartFindOrCreate.id, {
 		httpOnly: true,
 		sameSite: "lax",
 		//secure: true
 	});
 
-	return cart.cartFindOrCreate;
+	return newCart.cartFindOrCreate;
+};
+
+export const getCart = async () => {
+	const cartId = cookies().get("cartId")?.value;
+
+	if (!cartId) {
+		return;
+	}
+
+	const cart = await getCartById(cartId);
+	if (cart) {
+		return cart;
+	}
 };
 
 export const addProductToCart = async (

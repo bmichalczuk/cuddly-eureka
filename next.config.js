@@ -24,30 +24,6 @@ const nextConfig = {
 			},
 		],
 	},
-	redirects: async () => {
-		return [
-			{
-				source: "/categories/t-shirts",
-				destination: "/categories/t-shirts/1",
-				permanent: true,
-			},
-			{
-				source: "/categories/hoodies",
-				destination: "/categories/hoodies/1",
-				permanent: true,
-			},
-			{
-				source: "/categories/accesories",
-				destination: "/categories/accesories/1",
-				permanent: true,
-			},
-			{
-				source: "/products",
-				destination: "/products/1",
-				permanent: true,
-			},
-		];
-	},
 };
 
 module.exports = withMDX(nextConfig);
