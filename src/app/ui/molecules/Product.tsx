@@ -8,8 +8,10 @@ const addProductToCartAction = async (formData: FormData) => {
 };*/
 
 export const Product = ({ product }: { product: ProductPageFragment }) => {
-	const addProductToCartAction = async () => {
+	const addProductToCartAction = async (formData: FormData) => {
 		"use server";
+
+		console.log(formData);
 		console.log(product.name);
 	};
 	return (
