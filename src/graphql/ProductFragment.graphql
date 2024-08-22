@@ -1,4 +1,4 @@
-fragment ProductPage on Product {
+fragment Product on Product {
 	id
 	images {
 		url
