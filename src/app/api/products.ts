@@ -1,6 +1,5 @@
 import {
 	ProductsGetListDocument,
-	type TypedDocumentString,
 	ProductsGetListByCategoryIdDocument,
 	ProductGetByIdDocument,
 	type ProductListItemFragment,
@@ -8,40 +7,15 @@ import {
 	type CategoriesFragmentFragment,
 	ProductsSearchDocument,
 } from "../../gql/graphql";
-
-export const executeGraohql = async <TResult, TVariables>(
-	query: TypedDocumentString<TResult, TVariables>,
-	variables: TVariables,
-): Promise<TResult> => {
-	if (!process.env.GRAPHQL_URL) {
-		throw TypeError("GRAPHQL_URL is not defined");
-	}
-	const res = await fetch(process.env.GRAPHQL_URL, {
-		method: "POST",
-		body: JSON.stringify({
-			query,
-			variables,
-		}),
-		headers: { "Content-Type": "application/json" },
-	});
-
-	type GraphQLResponse<T> =
-		| { data?: undefined; errors: { message: string }[] }
-		| { data: T; errors?: undefined };
-
-	const graphqlResponse = (await res.json()) as GraphQLResponse<TResult>;
-
-	if (graphqlResponse.errors) {
-		throw TypeError(`GraphQL Error`, { cause: graphqlResponse.errors });
-	}
-
-	return graphqlResponse.data;
-};
+import { executeGraohql } from "@/utils/utils";
 
 export const getProductsList = async (page?: number) => {
 	const gqlVariables = page ? { take: 4, skip: (page - 1) * 4 } : {};
 
-	const graphqlResponse = await executeGraohql(ProductsGetListDocument, gqlVariables);
+	const graphqlResponse = await executeGraohql({
+		query: ProductsGetListDocument,
+		variables: gqlVariables,
+	});
 	if (!graphqlResponse.products.data) {
 		throw new TypeError("GraphQL error: no data");
 	}
@@ -51,8 +25,11 @@ export const getProductsList = async (page?: number) => {
 export const getProductsListByCategoryName = async (
 	name: CategoriesFragmentFragment["data"][0]["name"],
 ) => {
-	const graphqlResponse = await executeGraohql(ProductsGetListByCategoryIdDocument, {
-		slug: name,
+	const graphqlResponse = await executeGraohql({
+		query: ProductsGetListByCategoryIdDocument,
+		variables: {
+			slug: name,
+		},
 	});
 	if (!graphqlResponse.category) {
 		throw new TypeError("GraphQL error: no such category");
@@ -61,7 +38,7 @@ export const getProductsListByCategoryName = async (
 };
 
 export const getProductById = async (id: ProductListItemFragment["id"]) => {
-	const data = await executeGraohql(ProductGetByIdDocument, { id });
+	const data = await executeGraohql({ query: ProductGetByIdDocument, variables: { id } });
 
 	if (!data.product) {
 		throw new TypeError("GraphQL error: no such products");
@@ -70,7 +47,7 @@ export const getProductById = async (id: ProductListItemFragment["id"]) => {
 };
 
 export const getCategoriesList = async () => {
-	const data = await executeGraohql(CategoriesGetListDocument, {});
+	const data = await executeGraohql({ query: CategoriesGetListDocument, variables: {} });
 	if (!data.categories.data) {
 		throw new TypeError("GraphQL error: no such products");
 	}
@@ -78,7 +55,10 @@ export const getCategoriesList = async () => {
 };
 
 export const searchProducts = async (search: string) => {
-	const res = await executeGraohql(ProductsSearchDocument, { search: search });
+	const res = await executeGraohql({
+		query: ProductsSearchDocument,
+		variables: { search: search },
+	});
 	if (!res.products) {
 		throw new TypeError("GraphQL error: no such products");
 	}
