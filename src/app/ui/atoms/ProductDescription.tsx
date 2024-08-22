@@ -20,7 +20,7 @@ export const ProductDescription = ({
 				</div>
 			</div>
 
-			<div className="text-right">${rating}</div>
+			<div className="text-right">{rating && Math.round(rating)}</div>
 		</div>
 	);
 };
