@@ -1,23 +1,16 @@
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Image from "next/image";
-import { getCartById } from "@/api/cart";
+import { ProductQuantity } from "./ProductQuantity";
+import { RemoveButton } from "./RemoveProductButton";
+import { getCartFromCookies } from "@/api/cart";
 import { formatPrice } from "@/utils/utils";
 
 export default async function CartPage() {
-	const cartId = cookies().get("cartId")?.value;
-	console.log(cartId);
-	if (!cartId) {
-		//redirect("/");
-		return <div>nocart</div>;
-	}
+	const cart = await getCartFromCookies();
 
-	const { cart } = await getCartById(cartId);
 	console.log(cart);
 	if (!cart) {
-		//redirect("/");
-
-		return <div>nocart</div>;
+		redirect("/");
 	}
 	return (
 		<div>
@@ -54,16 +47,18 @@ export default async function CartPage() {
 										{item.product.name}
 									</td>
 									<td className="px-10 py-3 text-center">
-										{/*<ProductQuantity
-											quantity={item.quantity}
-											productId={item.product.id}
-											cartId={cart.id}
-										/>*/}
+										{
+											<ProductQuantity
+												quantity={item.quantity}
+												productId={item.product.id}
+												cartId={cart.id}
+											/>
+										}
 									</td>
 
 									<td className="px-10 py-3">{formatPrice(item.product.price)}</td>
 									<td className="px-10 py-3">
-										{/*<RemoveButton cartId={cart.id} productId={item.product.id} />*/}
+										{<RemoveButton cartId={cart.id} productId={item.product.id} />}
 									</td>
 								</tr>
 							);

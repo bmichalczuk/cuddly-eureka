@@ -7,12 +7,12 @@ import {
 	type CategoriesFragmentFragment,
 	ProductsSearchDocument,
 } from "../../gql/graphql";
-import { executeGraohql } from "@/utils/utils";
+import { executeGraphql } from "@/utils/utils";
 
 export const getProductsList = async (page?: number) => {
 	const gqlVariables = page ? { take: 4, skip: (page - 1) * 4 } : {};
 
-	const graphqlResponse = await executeGraohql({
+	const graphqlResponse = await executeGraphql({
 		query: ProductsGetListDocument,
 		variables: gqlVariables,
 	});
@@ -25,7 +25,7 @@ export const getProductsList = async (page?: number) => {
 export const getProductsListByCategoryName = async (
 	name: CategoriesFragmentFragment["data"][0]["name"],
 ) => {
-	const graphqlResponse = await executeGraohql({
+	const graphqlResponse = await executeGraphql({
 		query: ProductsGetListByCategoryIdDocument,
 		variables: {
 			slug: name,
@@ -38,7 +38,7 @@ export const getProductsListByCategoryName = async (
 };
 
 export const getProductById = async (id: ProductListItemFragment["id"]) => {
-	const data = await executeGraohql({ query: ProductGetByIdDocument, variables: { id } });
+	const data = await executeGraphql({ query: ProductGetByIdDocument, variables: { id } });
 
 	if (!data.product) {
 		throw new TypeError("GraphQL error: no such products");
@@ -47,7 +47,7 @@ export const getProductById = async (id: ProductListItemFragment["id"]) => {
 };
 
 export const getCategoriesList = async () => {
-	const data = await executeGraohql({ query: CategoriesGetListDocument, variables: {} });
+	const data = await executeGraphql({ query: CategoriesGetListDocument, variables: {} });
 	if (!data.categories.data) {
 		throw new TypeError("GraphQL error: no such products");
 	}
@@ -55,7 +55,7 @@ export const getCategoriesList = async () => {
 };
 
 export const searchProducts = async (search: string) => {
-	const res = await executeGraohql({
+	const res = await executeGraphql({
 		query: ProductsSearchDocument,
 		variables: { search: search },
 	});

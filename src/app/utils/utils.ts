@@ -34,7 +34,7 @@ export const withDebounce = (fn: () => void, time = 500) => {
 	};
 };
 
-export const executeGraohql = async <TResult, TVariables>({
+export const executeGraphql = async <TResult, TVariables>({
 	query,
 	variables,
 	next,

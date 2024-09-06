@@ -4,10 +4,10 @@ import {
 	CollectionGetDataDocument,
 	CollectionsCardsGetDataDocument,
 } from "../../gql/graphql";
-import { executeGraohql } from "@/utils/utils";
+import { executeGraphql } from "@/utils/utils";
 
 export const getCollectionsList = async () => {
-	const graphqlResponse = await executeGraohql({
+	const graphqlResponse = await executeGraphql({
 		query: CollectionsGetListDocument,
 		variables: {},
 	});
@@ -18,7 +18,7 @@ export const getCollectionsList = async () => {
 };
 
 export const getCollectionData = async (collectionName: CollectionList["data"][0]["slug"]) => {
-	const graphqlResponse = await executeGraohql({
+	const graphqlResponse = await executeGraphql({
 		query: CollectionGetDataDocument,
 		variables: {
 			slug: collectionName,
@@ -32,7 +32,7 @@ export const getCollectionData = async (collectionName: CollectionList["data"][0
 };
 
 export const getCollectionsCardsData = async () => {
-	const graphqlResponse = await executeGraohql({
+	const graphqlResponse = await executeGraphql({
 		query: CollectionsCardsGetDataDocument,
 		variables: {},
 	});

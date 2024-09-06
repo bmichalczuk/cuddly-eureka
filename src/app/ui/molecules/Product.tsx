@@ -1,25 +1,29 @@
+import { cookies } from "next/headers";
 import { ProductCoverImage } from "../atoms/ProductCoverImage";
 import { ProductDescription } from "../atoms/ProductDescription";
-import type { ProductPageFragment } from "../../../gql/graphql";
+import { type ProductFragment } from "../../../gql/graphql";
+import { AddProductToCartButton } from "../atoms/AddProductToCartButton";
+import { addToCart, getOrCreateCart } from "@/api/cart";
 
-export const Product = ({ product }: { product: ProductPageFragment }) => {
+export const Product = async ({ product }: { product: ProductFragment }) => {
 	async function addProductToCartAction() {
 		"use server";
-		console.log(product.images[0]);
+
+		const cart = await getOrCreateCart();
+		cookies().set("cartId", cart.id);
+		await addToCart(cart.id, product.id);
 	}
 
 	return (
-		<article className="lg:max-w-8xl mt-auto grid grid-cols-1 lg:m-12  lg:grid-cols-2">
-			<form action={addProductToCartAction}>
-				{product.images[0] && <ProductCoverImage {...product.images[0]} />}
+		<form
+			action={addProductToCartAction}
+			className="lg:max-w-8xl mt-auto grid grid-cols-1 lg:m-12  lg:grid-cols-2"
+		>
+			{product.images[0] && <ProductCoverImage {...product.images[0]} />}
+			<div>
 				<ProductDescription {...product} />
-				<button
-					type="submit"
-					className="w-full rounded-md border bg-slate-700 px-8 py-3 text-white"
-				>
-					Add to cart
-				</button>
-			</form>
-		</article>
+				<AddProductToCartButton />
+			</div>
+		</form>
 	);
 };
