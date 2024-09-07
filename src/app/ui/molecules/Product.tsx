@@ -1,4 +1,4 @@
-import { cookies } from "next/headers";
+import { revalidateTag } from "next/cache";
 import { ProductCoverImage } from "../atoms/ProductCoverImage";
 import { ProductDescription } from "../atoms/ProductDescription";
 import { type ProductFragment } from "../../../gql/graphql";
@@ -10,8 +10,8 @@ export const Product = async ({ product }: { product: ProductFragment }) => {
 		"use server";
 
 		const cart = await getOrCreateCart();
-		cookies().set("cartId", cart.id);
 		await addToCart(cart.id, product.id);
+		revalidateTag("cart");
 	}
 
 	return (
