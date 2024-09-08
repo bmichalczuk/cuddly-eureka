@@ -3,7 +3,7 @@ import {
 	CollectionsGetListDocument,
 	CollectionGetDataDocument,
 	CollectionsCardsGetDataDocument,
-} from "../src/gql/graphql";
+} from "../../src/gql/graphql";
 import { executeGraphql } from "@/utils/utils";
 
 export const getCollectionsList = async () => {

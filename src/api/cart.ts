@@ -5,7 +5,7 @@ import {
 	CartGetByIdDocument,
 	type ProductFragment,
 	type CartFragment,
-} from "../src/gql/graphql";
+} from "../gql/graphql";
 import { executeGraphql } from "@/utils/utils";
 
 export const getOrCreateCart = async (): Promise<CartFragment> => {

@@ -6,7 +6,7 @@ import {
 	CategoriesGetListDocument,
 	type CategoriesFragmentFragment,
 	ProductsSearchDocument,
-} from "../src/gql/graphql";
+} from "../gql/graphql";
 import { executeGraphql } from "@/utils/utils";
 
 export const getProductsList = async (page?: number) => {

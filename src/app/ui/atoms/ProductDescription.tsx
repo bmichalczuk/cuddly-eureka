@@ -1,4 +1,4 @@
-import { type ProductPageFragment } from "../../../gql/graphql";
+import { type ProductFragment } from "../../../gql/graphql";
 import { formatPrice } from "@/utils/utils";
 
 export const ProductDescription = ({
@@ -7,7 +7,7 @@ export const ProductDescription = ({
 	price,
 	description,
 	rating,
-}: ProductPageFragment) => {
+}: ProductFragment) => {
 	return (
 		<div className="border p-5">
 			<h1 className="my-5 text-center text-3xl font-bold">{name}</h1>

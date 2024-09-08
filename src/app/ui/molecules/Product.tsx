@@ -3,7 +3,7 @@ import { ProductCoverImage } from "../atoms/ProductCoverImage";
 import { ProductDescription } from "../atoms/ProductDescription";
 import { type ProductFragment } from "../../../gql/graphql";
 import { AddProductToCartButton } from "../atoms/AddProductToCartButton";
-import { addToCart, getOrCreateCart } from "../../../../api/cart";
+import { addToCart, getOrCreateCart } from "../../../api/cart";
 
 export const Product = async ({ product }: { product: ProductFragment }) => {
 	async function addProductToCartAction() {

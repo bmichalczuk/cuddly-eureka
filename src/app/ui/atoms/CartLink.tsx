@@ -1,7 +1,7 @@
 import { ShoppingCart } from "lucide-react";
 import { cookies } from "next/headers";
 import Link from "next/link";
-import { getCartFromCookies } from "../../../../api/cart";
+import { getCartFromCookies } from "../../../api/cart";
 import { ActiveLink } from "./ActiveLink";
 
 export const CartLink = async () => {

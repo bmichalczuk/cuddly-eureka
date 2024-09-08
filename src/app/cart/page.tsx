@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import Image from "next/image";
-import { getCartFromCookies } from "../../../api/cart";
+import { getCartFromCookies } from "../../api/cart";
 import { ProductQuantity } from "./ProductQuantity";
 import { RemoveButton } from "./RemoveProductButton";
 import { formatPrice } from "@/utils/utils";

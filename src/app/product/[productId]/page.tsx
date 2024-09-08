@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
-import { getProductById } from "../../../../api/products";
+import { getProductById } from "../../../api/products";
 import { Product } from "@/ui/molecules/Product";
 import { SuggestedProductsList } from "@/ui/organisms/SuggestedProductList";
 

@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { getCollectionsCardsData } from "../../api/collections";
+import { getCollectionsCardsData } from "../api/collections";
 import { CollectionsList } from "./ui/molecules/CollectionsList";
 
 import { SuggestedProductsList } from "./ui/organisms/SuggestedProductList";
