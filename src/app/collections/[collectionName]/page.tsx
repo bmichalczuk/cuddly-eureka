@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { type Metadata } from "next";
-import { getCollectionData, getCollectionsList } from "@/api/collections";
+import { getCollectionData, getCollectionsList } from "../../../../api/collections";
 import { ProductsList } from "@/ui/organisms/ProductsList";
 
 export const generateStaticParams = async () => {

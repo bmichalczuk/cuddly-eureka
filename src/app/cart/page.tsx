@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
 import Image from "next/image";
+import { getCartFromCookies } from "../../../api/cart";
 import { ProductQuantity } from "./ProductQuantity";
 import { RemoveButton } from "./RemoveProductButton";
-import { getCartFromCookies } from "@/api/cart";
 import { formatPrice } from "@/utils/utils";
 
 export default async function CartPage() {
