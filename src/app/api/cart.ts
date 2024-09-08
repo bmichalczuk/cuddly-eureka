@@ -49,7 +49,11 @@ export const getCartById = async (cartId: CartFragment["id"]) => {
 
 export async function createCart() {
 	const cartId = cookies().get("cartId")?.value;
-	const cart = await executeGraphql({ query: CartCreateDocument, variables: { id: cartId } });
+	const cart = await executeGraphql({
+		query: CartCreateDocument,
+		variables: { id: cartId },
+		cache: "no-store",
+	});
 	return cart;
 }
 
