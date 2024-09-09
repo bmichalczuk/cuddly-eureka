@@ -67,7 +67,7 @@ export default async function CartPage() {
 					</tbody>
 				</table>
 				<form action={handleStripePaymentAction} className="flex border-red-800">
-					<Button title="Pay with Stripe" type="submit" className="ml-auto mt-2 ">
+					<Button title="Pay with Stripe" type="submit" className="w- ml-auto mt-2">
 						Pay
 					</Button>
 				</form>
