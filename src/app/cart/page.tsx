@@ -11,7 +11,7 @@ export default async function CartPage() {
 
 	console.log(cart);
 	if (!cart || cart.items.length < 1) {
-		return <div>Your cart is empty, add some products.</div>;
+		return <div className="p-5 text-center text-2xl">Your cart is empty, add some products.</div>;
 	}
 	return (
 		<div>
