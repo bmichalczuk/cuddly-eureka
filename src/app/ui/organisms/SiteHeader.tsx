@@ -2,9 +2,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { SiteNavbar } from "../molecules/SiteNavbar";
 import { SearchProductInput } from "../atoms/SearchProductInput";
-
 import { CartLink } from "../atoms/CartLink";
-
 export function SiteHeader() {
 	return (
 		<header className="flex w-full flex-row items-center  bg-slate-700 p-7 px-16 text-white">

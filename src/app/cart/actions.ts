@@ -1,25 +1,24 @@
 "use server";
 import { revalidateTag } from "next/cache";
-import Stripe from "stripe";
-import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
-import { getCart } from "../../api/cart";
 
+import Stripe from "stripe";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { getCartFromCookies } from "../../api/cart";
 import {
 	CartSetProductQuantityDocument,
 	CartRemoveProductDocument,
 	type CartFragment,
 	type ProductFragment,
 } from "../../gql/graphql";
-
-import { executeGraohql } from "@/utils/utils";
+import { executeGraphql } from "@/utils/utils";
 
 export const changeProductQuantity = async (
 	cartId: string,
 	productId: string,
 	quantity: number,
 ) => {
-	await executeGraohql({
+	await executeGraphql({
 		query: CartSetProductQuantityDocument,
 		variables: { cartId, productId, quantity },
 	});
@@ -30,7 +29,7 @@ export const removeProductFromCart = async (
 	cartId: CartFragment["id"],
 	productId: ProductFragment["id"],
 ) => {
-	await executeGraohql({ variables: { productId, cartId }, query: CartRemoveProductDocument });
+	await executeGraphql({ variables: { productId, cartId }, query: CartRemoveProductDocument });
 };
 
 export const handleStripePaymentAction = async () => {
@@ -39,21 +38,20 @@ export const handleStripePaymentAction = async () => {
 	}
 
 	const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-		apiVersion: "2023-10-16",
+		apiVersion: "2024-06-20",
 		typescript: true,
 	});
 
-	const cart = await getCart();
-	if (!cart?.cart) {
+	const cart = await getCartFromCookies();
+	if (!cart) {
 		return;
 	}
-	const { cart: currentCart } = cart;
 	const session = await stripe.checkout.sessions.create({
 		metadata: {
-			cartId: currentCart.id,
+			cartId: cart.id,
 		},
 		payment_method_types: ["card", "p24"],
-		line_items: currentCart.items.map((item) => {
+		line_items: cart.items.map((item) => {
 			return {
 				price_data: {
 					currency: "eur",

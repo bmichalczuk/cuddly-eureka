@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default function useDebounce(value: unknown, delay: number | undefined) {
+export function useDebounce(value: string, delay = 500) {
 	const [debouncedValue, setDebouncedValue] = useState(value);
 
 	useEffect(() => {

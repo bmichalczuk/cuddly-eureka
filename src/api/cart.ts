@@ -1,65 +1,44 @@
 import { cookies } from "next/headers";
 import {
-	CartCreateDocument,
-	type CartFragment,
-	CartGetByIdDocument,
 	CartAddProductDocument,
+	CartCreateDocument,
+	CartGetByIdDocument,
 	type ProductFragment,
+	type CartFragment,
 } from "../gql/graphql";
-import { executeGraohql } from "@/utils/utils";
+import { executeGraphql } from "@/utils/utils";
 
 export const getOrCreateCart = async (): Promise<CartFragment> => {
-	const cart = await getCart();
-	if (cart?.cart) {
-		return cart.cart;
+	const existingCart = await getCartFromCookies();
+	if (existingCart) {
+		return existingCart;
 	}
 
-	const cartId = cookies().get("cartId")?.value;
-	const newCart = await createCart(cartId);
-	if (!newCart.cartFindOrCreate) {
+	const cart = await createCart();
+	if (!cart.cartFindOrCreate) {
 		throw new Error("Failed to create cart");
 	}
-	cookies().set("cartId", newCart.cartFindOrCreate.id, {
+	cookies().set("cartId", cart.cartFindOrCreate.id, {
 		httpOnly: true,
 		sameSite: "lax",
 		//secure: true
 	});
 
-	return newCart.cartFindOrCreate;
+	return cart.cartFindOrCreate;
 };
 
-export const getCart = async () => {
+export const getCartFromCookies = async () => {
 	const cartId = cookies().get("cartId")?.value;
-
-	if (!cartId) {
-		return;
+	if (cartId) {
+		const cart = await getCartById(cartId);
+		if (cart.cart) {
+			return cart.cart;
+		}
 	}
-
-	const cart = await getCartById(cartId);
-	if (cart) {
-		return cart;
-	}
-};
-
-export const addProductToCart = async (
-	cartId: CartFragment["id"],
-	productId: ProductFragment["id"],
-	quantity = 1,
-) => {
-	const cart = await executeGraohql({
-		query: CartAddProductDocument,
-		variables: {
-			id: cartId,
-			productId,
-			quantity: quantity,
-		},
-		cache: "no-store",
-	});
-	return cart;
 };
 
 export const getCartById = async (cartId: CartFragment["id"]) => {
-	const cart = await executeGraohql({
+	const cart = await executeGraphql({
 		query: CartGetByIdDocument,
 		variables: { id: cartId },
 		next: { tags: ["cart"] },
@@ -68,7 +47,26 @@ export const getCartById = async (cartId: CartFragment["id"]) => {
 	return cart;
 };
 
-async function createCart(id?: CartFragment["id"]) {
-	const cart = await executeGraohql({ query: CartCreateDocument, variables: { id: id } });
+export async function createCart() {
+	const cartId = cookies().get("cartId")?.value;
+	const cart = await executeGraphql({
+		query: CartCreateDocument,
+		variables: { id: cartId },
+		cache: "no-store",
+	});
+	return cart;
+}
+
+export async function addToCart(
+	cartId: CartFragment["id"],
+	productId: ProductFragment["id"],
+	quantity = 1,
+) {
+	const cart = await executeGraphql({
+		query: CartAddProductDocument,
+		variables: { id: cartId, productId, quantity },
+		cache: "no-store",
+	});
+
 	return cart;
 }
