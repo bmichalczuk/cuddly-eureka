@@ -1,20 +1,8 @@
 import { ShoppingCart } from "lucide-react";
-import { cookies } from "next/headers";
-import Link from "next/link";
 import { getCartFromCookies } from "../../../api/cart";
 import { ActiveLink } from "./ActiveLink";
 
 export const CartLink = async () => {
-	const cartId = cookies().get("cartId")?.value;
-	if (!cartId) {
-		return (
-			<Link href="/cart" className="ml-1 flex flex-row p-5 font-bold">
-				<ShoppingCart />
-				<span className="mx-2">0</span>
-			</Link>
-		);
-	}
-
 	const cart = await getCartFromCookies();
 
 	return (

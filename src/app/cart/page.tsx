@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import Image from "next/image";
 import { getCartFromCookies } from "../../api/cart";
 import { ProductQuantity } from "./ProductQuantity";
@@ -11,8 +10,8 @@ export default async function CartPage() {
 	const cart = await getCartFromCookies();
 
 	console.log(cart);
-	if (!cart) {
-		redirect("/");
+	if (!cart || cart.items.length < 1) {
+		return <div>Your cart is empty, add some products.</div>;
 	}
 	return (
 		<div>
