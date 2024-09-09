@@ -5,6 +5,7 @@ import { ProductQuantity } from "./ProductQuantity";
 import { RemoveButton } from "./RemoveProductButton";
 import { handleStripePaymentAction } from "./actions";
 import { formatPrice } from "@/utils/utils";
+import { Button } from "@/ui/atoms/Button";
 
 export default async function CartPage() {
 	const cart = await getCartFromCookies();
@@ -19,7 +20,7 @@ export default async function CartPage() {
 				<h1 className="my-5 mb-10 text-3xl">
 					Order <span className="font-bold">#{cart.id}</span> summary
 				</h1>
-				<table className="m-auto text-xl ">
+				<table className="m-auto min-w-full text-xl">
 					<thead>
 						<tr className="700 border bg-slate-700 p-5 text-white">
 							<th className="px-10 py-3">Product</th>
@@ -66,13 +67,10 @@ export default async function CartPage() {
 						})}
 					</tbody>
 				</table>
-				<form action={handleStripePaymentAction} className="ml-auto">
-					<button
-						type="submit"
-						className="rounded-sm border bg-slate-100 px-8 py-2 shadow-sm transition-colors hover:bg-slate-200"
-					>
+				<form action={handleStripePaymentAction} className="flex border-red-800">
+					<Button title="Pay with Stripe" type="submit" className="ml-auto mt-2 ">
 						Pay
-					</button>
+					</Button>
 				</form>
 			</section>
 		</div>
