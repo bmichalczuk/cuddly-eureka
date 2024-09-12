@@ -1,15 +1,14 @@
 import Image from "next/image";
 import { getCartFromCookies } from "../../api/cart";
+import { handleStripePaymentAction } from "../../actions/cart";
 import { ProductQuantity } from "./ProductQuantity";
 import { RemoveButton } from "./RemoveProductButton";
-import { handleStripePaymentAction } from "./actions";
 import { formatPrice } from "@/utils/utils";
 import { Button } from "@/ui/atoms/Button";
 
 export default async function CartPage() {
 	const cart = await getCartFromCookies();
 
-	console.log(cart);
 	if (!cart || cart.items.length < 1) {
 		return <div className="p-5 text-center text-2xl">Your cart is empty, add some products.</div>;
 	}
