@@ -4,13 +4,13 @@ import { revalidateTag } from "next/cache";
 import Stripe from "stripe";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { getCartFromCookies } from "../../api/cart";
+import { addToCart, getCartFromCookies, getOrCreateCart } from "../api/cart";
 import {
 	CartSetProductQuantityDocument,
 	CartRemoveProductDocument,
 	type CartFragment,
 	type ProductFragment,
-} from "../../gql/graphql";
+} from "../gql/graphql";
 import { executeGraphql } from "@/utils/utils";
 
 export const changeProductQuantity = async (
@@ -73,7 +73,6 @@ export const handleStripePaymentAction = async () => {
 	if (!session.url) {
 		throw new Error("Missing checkout Session.url");
 	}
-	console.log(session.url);
 	cookies().set("cartId", "", {
 		httpOnly: true,
 		sameSite: "lax",
@@ -81,3 +80,18 @@ export const handleStripePaymentAction = async () => {
 	});
 	redirect(session.url);
 };
+
+export async function addProductToCartAction(productId: ProductFragment["id"]) {
+	"use server";
+
+	const cart = await getOrCreateCart();
+	const productInCart = cart.items.find((product) => product.product.id === productId);
+
+	if (productInCart) {
+		await changeProductQuantity(cart.id, productId, productInCart.quantity + 1);
+	} else {
+		await addToCart(cart.id, productId);
+	}
+
+	revalidateTag("cart");
+}
