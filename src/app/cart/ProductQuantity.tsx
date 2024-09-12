@@ -18,6 +18,7 @@ export const ProductQuantity = ({
 			<button
 				type="submit"
 				className="h-8 w-8 border bg-slate-50"
+				data-testid="decrement"
 				formAction={async () => {
 					setOptimisticQuantity(optimisticQuantity - 1);
 					await changeProductQuantity(cartId, productId, optimisticQuantity - 1);
@@ -29,6 +30,7 @@ export const ProductQuantity = ({
 			<button
 				type="submit"
 				className="h-8 w-8 border bg-slate-50"
+				data-testid="increment"
 				formAction={async () => {
 					setOptimisticQuantity(optimisticQuantity + 1);
 					await changeProductQuantity(cartId, productId, optimisticQuantity + 1);
