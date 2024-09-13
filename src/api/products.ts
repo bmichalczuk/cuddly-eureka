@@ -6,6 +6,8 @@ import {
 	CategoriesGetListDocument,
 	type CategoriesFragmentFragment,
 	ProductsSearchDocument,
+	type ProductFragment,
+	ProductGetReviewsDocument,
 } from "../gql/graphql";
 import { executeGraphql } from "@/utils/utils";
 
@@ -48,6 +50,7 @@ export const getProductById = async (id: ProductListItemFragment["id"]) => {
 
 export const getCategoriesList = async () => {
 	const data = await executeGraphql({ query: CategoriesGetListDocument, variables: {} });
+
 	if (!data.categories.data) {
 		throw new TypeError("GraphQL error: no such products");
 	}
@@ -59,8 +62,22 @@ export const searchProducts = async (search: string) => {
 		query: ProductsSearchDocument,
 		variables: { search: search },
 	});
+
 	if (!res.products) {
 		throw new TypeError("GraphQL error: no such products");
 	}
 	return res.products.data;
+};
+
+export const getProductReviews = async (productId: ProductFragment["id"]) => {
+	const res = await executeGraphql({
+		query: ProductGetReviewsDocument,
+		variables: {
+			productId: productId,
+		},
+	});
+	if (!res.product) {
+		throw new TypeError("GraphQL error: no such product");
+	}
+	return res.product.reviews;
 };

@@ -1,0 +1,11 @@
+query ProductGetReviews($productId: ID) {
+	product(id: $productId) {
+		reviews {
+			author
+			description
+			email
+			rating
+			title
+		}
+	}
+}

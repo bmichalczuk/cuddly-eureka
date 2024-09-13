@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { getProductById } from "../../../api/products";
 import { Product } from "@/ui/molecules/Product";
 import { SuggestedProductsList } from "@/ui/organisms/SuggestedProductList";
-
+import { Reviews } from "@/ui/molecules/ProductReviews";
 export async function generateMetadata({
 	params,
 }: {
@@ -23,9 +23,11 @@ export default async function ProductPage({ params }: { params: { productId: str
 	return (
 		<section aria-busy={product ? false : true}>
 			<Product product={product} />
+
 			<aside>
 				<Suspense>
 					<SuggestedProductsList />
+					<Reviews productId={product.id} />
 				</Suspense>
 			</aside>
 		</section>
