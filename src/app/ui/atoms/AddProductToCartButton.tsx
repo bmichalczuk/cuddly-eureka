@@ -7,7 +7,12 @@ export const AddProductToCartButton = () => {
 	formStatus.pending;
 
 	return (
-		<Button type="submit" disabled={formStatus.pending} className="ml-auto block">
+		<Button
+			data-testid="add-to-cart-button"
+			type="submit"
+			disabled={formStatus.pending}
+			className="ml-auto block"
+		>
 			Add to cart
 		</Button>
 	);
