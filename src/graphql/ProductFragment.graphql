@@ -11,4 +11,11 @@ fragment Product on Product {
 	categories {
 		name
 	}
+	reviews {
+		author
+		description
+		email
+		rating
+		title
+	}
 }
