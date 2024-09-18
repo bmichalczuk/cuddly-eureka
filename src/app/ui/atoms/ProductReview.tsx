@@ -1,7 +1,7 @@
 import clsx from "clsx";
-import { type ProductFragment } from "../../../gql/graphql";
+import { type ReviewFragment } from "../../../gql/graphql";
 
-export const ProductReview = ({ review }: { review: ProductFragment["reviews"][0] }) => {
+export const ProductReview = ({ review }: { review: ReviewFragment }) => {
 	return (
 		<article className=" max-w-3xl border-slate-700">
 			<h3 className="text-base font-bold">{review.title}</h3>

@@ -400,6 +400,8 @@ export type ProductsSearchQueryVariables = Exact<{
 
 export type ProductsSearchQuery = { products: { data: Array<{ id: string, name: string, price: number, images: Array<{ alt: string, url: string }>, categories: Array<{ name: string }> }> } };
 
+export type ReviewFragment = { author: string, description: string, email: string, rating: number, title: string };
+
 export class TypedDocumentString<TResult, TVariables>
   extends String
   implements DocumentTypeDecoration<TResult, TVariables>
@@ -530,6 +532,15 @@ export const ProductsSearchFragmentDoc = new TypedDocumentString(`
   }
   price
 }`, {"fragmentName":"ProductsSearch"}) as unknown as TypedDocumentString<ProductsSearchFragment, unknown>;
+export const ReviewFragmentDoc = new TypedDocumentString(`
+    fragment Review on Review {
+  author
+  description
+  email
+  rating
+  title
+}
+    `, {"fragmentName":"Review"}) as unknown as TypedDocumentString<ReviewFragment, unknown>;
 export const CartAddProductDocument = new TypedDocumentString(`
     mutation CartAddProduct($id: ID!, $productId: String!, $quantity: Int) {
   cartAddItem(
@@ -743,15 +754,17 @@ export const ProductGetReviewsDocument = new TypedDocumentString(`
     query ProductGetReviews($productId: ID) {
   product(id: $productId) {
     reviews {
-      author
-      description
-      email
-      rating
-      title
+      ...Review
     }
   }
 }
-    `) as unknown as TypedDocumentString<ProductGetReviewsQuery, ProductGetReviewsQueryVariables>;
+    fragment Review on Review {
+  author
+  description
+  email
+  rating
+  title
+}`) as unknown as TypedDocumentString<ProductGetReviewsQuery, ProductGetReviewsQueryVariables>;
 export const ProductsGetListDocument = new TypedDocumentString(`
     query ProductsGetList($take: Int, $skip: Int) {
   products(take: $take, skip: $skip) {
