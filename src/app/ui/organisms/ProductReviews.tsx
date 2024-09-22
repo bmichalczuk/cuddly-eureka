@@ -17,12 +17,12 @@ export const Reviews = async ({
 
 	const handleReviewForm = async (formData: FormData) => {
 		const data = {
-			productId: productId,
-			title: formData.get("review-title") as string,
-			author: formData.get("review-author") as string,
-			description: formData.get("review-description") as string,
-			email: formData.get("review-email") as string,
-			rating: Number(formData.get("review-rating")),
+			productId,
+			title: formData.get("headline") as string,
+			author: formData.get("name") as string,
+			description: formData.get("content") as string,
+			email: formData.get("email") as string,
+			rating: Number(formData.get("rating")),
 		};
 		updateOptimisticReviews((prev) => {
 			return [...prev, data];

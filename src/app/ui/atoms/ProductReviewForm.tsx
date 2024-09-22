@@ -12,35 +12,20 @@ export const ProductReviewForm = ({
 		<form action={action} data-testid="add-review-form" className="flex flex-1 flex-col px-5">
 			<input required className="hidden" name="productId" value={productId} />
 			<h4>Title:</h4>
-			<input
-				required
-				className="mb-5 border border-slate-500  p-3"
-				type="text"
-				name="review-title"
-			/>
+			<input required className="mb-5 border border-slate-500  p-3" type="text" name="headline" />
 			<h4>Opinion:</h4>
 			<textarea
 				required
 				rows={10}
 				className="mb-5 border border-slate-500  p-3"
-				name="review-description"
+				name="content"
 			></textarea>
 			<h4>Email adress:</h4>
-			<input
-				required
-				className="mb-5 border  border-slate-500  p-3"
-				type="email"
-				name="review-email"
-			/>
+			<input required className="mb-5 border  border-slate-500  p-3" type="email" name="email" />
 			<h4>Your mame:</h4>
-			<input
-				required
-				className="mb-5 border  border-slate-500  p-3"
-				type="text"
-				name="review-author"
-			/>
+			<input required className="mb-5 border  border-slate-500  p-3" type="text" name="name" />
 			<h4>Rate product:</h4>
-			<select required name="review-rating" className="border border-slate-700 p-1">
+			<select required name="rating" className="border border-slate-700 p-1">
 				<option value="1">1</option>
 				<option value="2">2</option>
 				<option value="3">3</option>

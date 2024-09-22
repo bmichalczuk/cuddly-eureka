@@ -20,7 +20,7 @@ export async function generateMetadata({
 export default async function ProductPage({ params }: { params: { productId: string } }) {
 	const product = await getProductById(params.productId);
 
-	const reviews = await getProductReviews(params.productId);
+	const reviews = (await getProductReviews(params.productId)).reverse();
 	return (
 		<section aria-busy={product ? false : true}>
 			<Product product={product} />
@@ -29,9 +29,7 @@ export default async function ProductPage({ params }: { params: { productId: str
 				<Suspense>
 					<SuggestedProductsList />
 				</Suspense>
-				<Suspense>
-					<Reviews reviews={reviews} productId={product.id} />
-				</Suspense>
+				<Reviews reviews={reviews} productId={product.id} />
 			</aside>
 		</section>
 	);
