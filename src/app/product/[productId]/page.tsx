@@ -29,9 +29,7 @@ export default async function ProductPage({ params }: { params: { productId: str
 				<Suspense>
 					<SuggestedProductsList />
 				</Suspense>
-				<Suspense>
-					<Reviews reviews={reviews} productId={product.id} />
-				</Suspense>
+				<Reviews reviews={reviews} productId={product.id} />
 			</aside>
 		</section>
 	);
