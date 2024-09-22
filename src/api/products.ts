@@ -48,6 +48,7 @@ export const getProductById = async (id: ProductListItemFragment["id"]) => {
 
 export const getCategoriesList = async () => {
 	const data = await executeGraphql({ query: CategoriesGetListDocument, variables: {} });
+
 	if (!data.categories.data) {
 		throw new TypeError("GraphQL error: no such products");
 	}
@@ -59,6 +60,7 @@ export const searchProducts = async (search: string) => {
 		query: ProductsSearchDocument,
 		variables: { search: search },
 	});
+
 	if (!res.products) {
 		throw new TypeError("GraphQL error: no such products");
 	}
