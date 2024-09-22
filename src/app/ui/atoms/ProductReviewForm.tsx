@@ -1,27 +1,15 @@
 import { type ProductFragment } from "../../../gql/graphql";
-import { createProductReview } from "../../../api/product";
 import { Button } from "./Button";
 
-export const ProductReviewForm = ({ productId }: { productId: ProductFragment["id"] }) => {
-	const createReviewAction = async (formData: FormData) => {
-		"use server";
-		const data = {
-			productId,
-			title: formData.get("review-title") as string,
-			author: formData.get("review-author") as string,
-			description: formData.get("review-description") as string,
-			email: formData.get("review-email") as string,
-			rating: Number(formData.get("review-rating")),
-		};
-		await createProductReview(data);
-	};
-
+export const ProductReviewForm = ({
+	productId,
+	action,
+}: {
+	productId: ProductFragment["id"];
+	action: (formData: FormData) => Promise<void>;
+}) => {
 	return (
-		<form
-			action={createReviewAction}
-			data-testid="add-review-form"
-			className="flex flex-1 flex-col px-5"
-		>
+		<form action={action} data-testid="add-review-form" className="flex flex-1 flex-col px-5">
 			<input required className="hidden" name="productId" value={productId} />
 			<h4>Title:</h4>
 			<input
