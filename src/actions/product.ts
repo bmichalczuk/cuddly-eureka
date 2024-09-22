@@ -6,11 +6,11 @@ import { type ProductFragment } from "../gql/graphql";
 export const createReviewAction = async (formData: FormData, productId: ProductFragment["id"]) => {
 	const data = {
 		productId,
-		title: formData.get("review-title") as string,
-		author: formData.get("review-author") as string,
-		description: formData.get("review-description") as string,
-		email: formData.get("review-email") as string,
-		rating: Number(formData.get("review-rating")),
+		title: formData.get("headline") as string,
+		author: formData.get("name") as string,
+		description: formData.get("content") as string,
+		email: formData.get("email") as string,
+		rating: Number(formData.get("rating")),
 	};
 	const res = await createProductReview(data);
 	console.log(res);
