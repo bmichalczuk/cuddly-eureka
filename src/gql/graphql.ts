@@ -381,6 +381,8 @@ export type ProductsSearchFragment = { id: string, name: string, price: number, 
 export type ProductsGetListQueryVariables = Exact<{
   take?: InputMaybe<Scalars['Int']['input']>;
   skip?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<ProductSortBy>;
+  order?: InputMaybe<SortDirection>;
 }>;
 
 
@@ -766,8 +768,8 @@ export const ProductGetReviewsDocument = new TypedDocumentString(`
   title
 }`) as unknown as TypedDocumentString<ProductGetReviewsQuery, ProductGetReviewsQueryVariables>;
 export const ProductsGetListDocument = new TypedDocumentString(`
-    query ProductsGetList($take: Int, $skip: Int) {
-  products(take: $take, skip: $skip) {
+    query ProductsGetList($take: Int, $skip: Int, $orderBy: ProductSortBy, $order: SortDirection) {
+  products(take: $take, skip: $skip, orderBy: $orderBy, order: $order) {
     data {
       ...ProductListItem
     }

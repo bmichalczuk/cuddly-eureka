@@ -14,7 +14,7 @@ export const ProductDescription = ({
 			<p className="px-5">{description}</p>
 			<div className="my-3 flex flex-row justify-between px-1">
 				<div className="cursor-pointer font-serif italic hover:underline">{`Category: ${categories[0]?.name || ""}`}</div>
-				<div className="font-semibold">
+				<div className="font-semibold " data-testid="product-price">
 					<span className="sr-only">Cena:</span>
 					{formatPrice(price)}
 				</div>
