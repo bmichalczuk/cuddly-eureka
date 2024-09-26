@@ -41,6 +41,7 @@ export default async function ProductsPage({
 							activeClassName="border border-red-800"
 							className="inline-block border border-gray-700 px-4 py-2"
 							href={`/products/${page}?sort=DEFAULT`}
+							data-testid="sort-by-price"
 						>
 							Default
 						</ActiveLink>
@@ -51,6 +52,7 @@ export default async function ProductsPage({
 							activeClassName="border border-red-800"
 							className="inline-block border border-gray-700 px-4 py-2"
 							href={`/products/${page}?sort=PRICE&order=ASC`}
+							data-testid="sort-by-price"
 						>
 							Lowest price
 						</ActiveLink>
@@ -61,6 +63,7 @@ export default async function ProductsPage({
 							activeClassName="border border-red-800"
 							className="inline-block border border-gray-700 px-4 py-2"
 							href={`/products/${page}?sort=PRICE&order=DESC`}
+							data-testid="sort-by-price"
 						>
 							Highest price
 						</ActiveLink>
