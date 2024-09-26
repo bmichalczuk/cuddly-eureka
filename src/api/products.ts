@@ -6,15 +6,27 @@ import {
 	CategoriesGetListDocument,
 	type CategoriesFragmentFragment,
 	ProductsSearchDocument,
+	type ProductSortBy,
+	type SortDirection,
 } from "../gql/graphql";
 import { executeGraphql } from "@/utils/utils";
 
-export const getProductsList = async (page?: number) => {
-	const gqlVariables = page ? { take: 4, skip: (page - 1) * 4 } : {};
+export const getProductsList = async (
+	page?: number,
+	orderBy?: ProductSortBy,
+	order?: SortDirection,
+) => {
+	const take = page && 4;
+	const skip = page && page - 1;
 
 	const graphqlResponse = await executeGraphql({
 		query: ProductsGetListDocument,
-		variables: gqlVariables,
+		variables: {
+			take,
+			skip,
+			orderBy,
+			order,
+		},
 	});
 	if (!graphqlResponse.products.data) {
 		throw new TypeError("GraphQL error: no data");
