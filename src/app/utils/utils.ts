@@ -21,9 +21,25 @@ export const createPaginationLinks = async (
 export const createPagesParams = (products: ProductListItemFragment[]) => {
 	const numberOfPages = Math.ceil(products.length / itemsPerPage);
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	return [...new Array(numberOfPages)].map((page, i) => {
+	const params = [...new Array(numberOfPages)].map((page, i) => {
 		return { page: String(i) };
 	});
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+	const priceDescParams = [...new Array(numberOfPages)].map((page, i) => {
+		return { page: String(i) + "?SORT=PRICE&ORDER=DESC" };
+	});
+
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+	const priceAscParams = [...new Array(numberOfPages)].map((page, i) => {
+		return { page: String(i) + "?SORT=PRICE&ORDER=ASC" };
+	});
+
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+	const priceDefParams = [...new Array(numberOfPages)].map((page, i) => {
+		return { page: String(i) + "?SORT=DEFAULT" };
+	});
+
+	return [...params, ...priceAscParams, ...priceDescParams, ...priceDefParams];
 };
 
 export const withDebounce = (fn: () => void, time = 500) => {
