@@ -1,11 +1,10 @@
 import { type Route } from "next";
-import Link from "next/link";
 import { getProductsList } from "../../../api/products";
 import { type ProductSortBy, type SortDirection } from "../../../gql/graphql";
 import { ProductsList } from "@ui/organisms/ProductsList";
 import { Pagination } from "@/ui/molecules/Pagination";
 import { createPaginationLinks, createPagesParams } from "@/utils/utils";
-
+import { SortProducts } from "@/ui/molecules/SortProducts";
 export const generateStaticParams = async () => {
 	const products = await getProductsList();
 	return createPagesParams(products);
@@ -32,38 +31,7 @@ export default async function ProductsPage({
 
 	return (
 		<section className="mx-auto max-w-md  sm:max-w-2xl sm:py-1 xl:max-w-6xl">
-			<div>
-				<p>Sort by:</p>
-				<ul className="flex flex-row">
-					<li className="mx-1">
-						<Link
-							className="inline-block border border-gray-700 px-4 py-2"
-							href={`/products/${page}?sort=DEFAULT`}
-							data-testid="sort-by-price"
-						>
-							Default
-						</Link>
-					</li>
-					<li className="mx-1">
-						<Link
-							className="inline-block border border-gray-700 px-4 py-2"
-							href={`/products/${page}?sort=PRICE&order=ASC`}
-							data-testid="sort-by-price"
-						>
-							Lowest price
-						</Link>
-					</li>
-					<li className="mx-1">
-						<Link
-							className="inline-block border border-gray-700 px-4 py-2"
-							href={`/products/${page}?sort=PRICE&order=DESC`}
-							data-testid="sort-by-price"
-						>
-							Highest price
-						</Link>
-					</li>
-				</ul>
-			</div>
+			<SortProducts />
 			<Pagination pages={links} />
 			<ProductsList products={products} />
 		</section>

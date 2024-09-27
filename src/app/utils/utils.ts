@@ -35,11 +35,24 @@ export const createPagesParams = (products: ProductListItemFragment[]) => {
 	});
 
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	const priceDefParams = [...new Array(numberOfPages)].map((page, i) => {
-		return { page: String(i) + "?SORT=DEFAULT" };
+	const ratingAscParams = [...new Array(numberOfPages)].map((page, i) => {
+		return { page: String(i) + "?SORT=RATING&ORDER=ASC" };
 	});
 
-	return [...params, ...priceAscParams, ...priceDescParams, ...priceDefParams];
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+	const ratingDescParams = [...new Array(numberOfPages)].map((page, i) => {
+		return { page: String(i) + "?SORT=RATING&ORDER=DESC" };
+	});
+
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+
+	return [
+		...params,
+		...priceAscParams,
+		...priceDescParams,
+		...ratingAscParams,
+		...ratingDescParams,
+	];
 };
 
 export const withDebounce = (fn: () => void, time = 500) => {
