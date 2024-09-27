@@ -334,7 +334,7 @@ export type CollectionGetDataQueryVariables = Exact<{
 }>;
 
 
-export type CollectionGetDataQuery = { collection?: { name: string, description: string, slug: string, products: Array<{ id: string, name: string, price: number, images: Array<{ alt: string, url: string }>, categories: Array<{ name: string }> }> } | null };
+export type CollectionGetDataQuery = { collection?: { name: string, description: string, slug: string, products: Array<{ id: string, name: string, price: number, rating?: number | null, images: Array<{ alt: string, url: string }>, categories: Array<{ name: string }> }> } | null };
 
 export type CollectionsCardsGetDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -374,9 +374,9 @@ export type ProductGetReviewsQueryVariables = Exact<{
 
 export type ProductGetReviewsQuery = { product?: { reviews: Array<{ author: string, description: string, email: string, rating: number, title: string }> } | null };
 
-export type ProductListItemFragment = { id: string, name: string, price: number, images: Array<{ alt: string, url: string }>, categories: Array<{ name: string }> };
+export type ProductListItemFragment = { id: string, name: string, rating?: number | null, price: number, images: Array<{ alt: string, url: string }>, categories: Array<{ name: string }> };
 
-export type ProductsSearchFragment = { id: string, name: string, price: number, images: Array<{ alt: string, url: string }>, categories: Array<{ name: string }> };
+export type ProductsSearchFragment = { id: string, name: string, rating?: number | null, price: number, images: Array<{ alt: string, url: string }>, categories: Array<{ name: string }> };
 
 export type ProductsGetListQueryVariables = Exact<{
   take?: InputMaybe<Scalars['Int']['input']>;
@@ -386,21 +386,21 @@ export type ProductsGetListQueryVariables = Exact<{
 }>;
 
 
-export type ProductsGetListQuery = { products: { data: Array<{ id: string, name: string, price: number, images: Array<{ alt: string, url: string }>, categories: Array<{ name: string }> }> } };
+export type ProductsGetListQuery = { products: { data: Array<{ id: string, name: string, rating?: number | null, price: number, images: Array<{ alt: string, url: string }>, categories: Array<{ name: string }> }> } };
 
 export type ProductsGetListByCategoryIdQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type ProductsGetListByCategoryIdQuery = { category?: { products: Array<{ id: string, name: string, price: number, images: Array<{ alt: string, url: string }>, categories: Array<{ name: string }> }> } | null };
+export type ProductsGetListByCategoryIdQuery = { category?: { products: Array<{ id: string, name: string, rating?: number | null, price: number, images: Array<{ alt: string, url: string }>, categories: Array<{ name: string }> }> } | null };
 
 export type ProductsSearchQueryVariables = Exact<{
   search?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type ProductsSearchQuery = { products: { data: Array<{ id: string, name: string, price: number, images: Array<{ alt: string, url: string }>, categories: Array<{ name: string }> }> } };
+export type ProductsSearchQuery = { products: { data: Array<{ id: string, name: string, rating?: number | null, price: number, images: Array<{ alt: string, url: string }>, categories: Array<{ name: string }> }> } };
 
 export type ReviewFragment = { author: string, description: string, email: string, rating: number, title: string };
 
@@ -508,6 +508,7 @@ export const ProductListItemFragmentDoc = new TypedDocumentString(`
     fragment ProductListItem on Product {
   id
   name
+  rating
   images {
     alt
     url
@@ -525,6 +526,7 @@ export const ProductsSearchFragmentDoc = new TypedDocumentString(`
     fragment ProductListItem on Product {
   id
   name
+  rating
   images {
     alt
     url
@@ -674,6 +676,7 @@ export const CollectionGetDataDocument = new TypedDocumentString(`
 fragment ProductListItem on Product {
   id
   name
+  rating
   images {
     alt
     url
@@ -778,6 +781,7 @@ export const ProductsGetListDocument = new TypedDocumentString(`
     fragment ProductListItem on Product {
   id
   name
+  rating
   images {
     alt
     url
@@ -798,6 +802,7 @@ export const ProductsGetListByCategoryIdDocument = new TypedDocumentString(`
     fragment ProductListItem on Product {
   id
   name
+  rating
   images {
     alt
     url
@@ -818,6 +823,7 @@ export const ProductsSearchDocument = new TypedDocumentString(`
     fragment ProductListItem on Product {
   id
   name
+  rating
   images {
     alt
     url
