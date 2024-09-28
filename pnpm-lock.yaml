@@ -8,6 +8,9 @@ dependencies:
   '@clerk/nextjs':
     specifier: ^5.6.3
     version: 5.6.3(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)
+  '@clerk/themes':
+    specifier: ^2.1.33
+    version: 2.1.33
   '@graphql-typed-document-node/core':
     specifier: ^3.2.0
     version: 3.2.0(graphql@16.8.1)
@@ -776,6 +779,14 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       std-env: 3.7.0
       swr: 2.2.5(react@18.2.0)
+    dev: false
+
+  /@clerk/themes@2.1.33:
+    resolution: {integrity: sha512-rh8tFqAkNAuN2YeWgHqOPoJDv6f27XkZWYV8u7WGpskvQbXhU8cXWPRWhDNBioSOoAt+VchHqvLGatNSeRNZhQ==}
+    engines: {node: '>=18.17.0'}
+    dependencies:
+      '@clerk/types': 4.23.0
+      tslib: 2.4.1
     dev: false
 
   /@clerk/types@4.23.0:
