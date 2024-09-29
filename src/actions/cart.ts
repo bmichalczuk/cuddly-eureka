@@ -4,7 +4,8 @@ import { revalidateTag } from "next/cache";
 import Stripe from "stripe";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { addToCart, getCartFromCookies, getOrCreateCart } from "../api/cart";
+import { currentUser } from "@clerk/nextjs/server";
+import { addToCart, completeCart, getCartFromCookies, getOrCreateCart } from "../api/cart";
 import {
 	CartSetProductQuantityDocument,
 	CartRemoveProductDocument,
@@ -42,7 +43,10 @@ export const handleStripePaymentAction = async () => {
 		typescript: true,
 	});
 
+	const user = await currentUser();
 	const cart = await getCartFromCookies();
+	const email = user?.emailAddresses[0]?.emailAddress || "";
+
 	if (!cart) {
 		return;
 	}
@@ -73,6 +77,7 @@ export const handleStripePaymentAction = async () => {
 	if (!session.url) {
 		throw new Error("Missing checkout Session.url");
 	}
+	await completeCart(cart.id, email);
 	cookies().set("cartId", "", {
 		httpOnly: true,
 		sameSite: "lax",
