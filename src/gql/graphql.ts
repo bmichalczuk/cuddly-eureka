@@ -346,6 +346,15 @@ export type CollectionsGetListQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type CollectionsGetListQuery = { collections: { data: Array<{ name: string, description: string, slug: string }> } };
 
+export type OrderFragment = { id: string, createdAt: unknown, totalAmount: number, lines: unknown, status: OrderStatus };
+
+export type OrdersGetByEmailQueryVariables = Exact<{
+  email: Scalars['String']['input'];
+}>;
+
+
+export type OrdersGetByEmailQuery = { orders: { data: Array<{ id: string, createdAt: unknown, totalAmount: number, lines: unknown, status: OrderStatus }> } };
+
 export type ProductCreateReviewMutationVariables = Exact<{
   productId: Scalars['ID']['input'];
   author: Scalars['String']['input'];
@@ -488,6 +497,15 @@ export const CollectionFragmentDoc = new TypedDocumentString(`
   }
 }
     `, {"fragmentName":"Collection"}) as unknown as TypedDocumentString<CollectionFragment, unknown>;
+export const OrderFragmentDoc = new TypedDocumentString(`
+    fragment Order on Order {
+  id
+  createdAt
+  totalAmount
+  lines
+  status
+}
+    `, {"fragmentName":"Order"}) as unknown as TypedDocumentString<OrderFragment, unknown>;
 export const ProductFragmentDoc = new TypedDocumentString(`
     fragment Product on Product {
   id
@@ -721,6 +739,21 @@ export const CollectionsGetListDocument = new TypedDocumentString(`
     slug
   }
 }`) as unknown as TypedDocumentString<CollectionsGetListQuery, CollectionsGetListQueryVariables>;
+export const OrdersGetByEmailDocument = new TypedDocumentString(`
+    query OrdersGetByEmail($email: String!) {
+  orders(email: $email) {
+    data {
+      ...Order
+    }
+  }
+}
+    fragment Order on Order {
+  id
+  createdAt
+  totalAmount
+  lines
+  status
+}`) as unknown as TypedDocumentString<OrdersGetByEmailQuery, OrdersGetByEmailQueryVariables>;
 export const ProductCreateReviewDocument = new TypedDocumentString(`
     mutation ProductCreateReview($productId: ID!, $author: String!, $description: String!, $email: String!, $rating: Int!, $title: String!) {
   reviewCreate(
