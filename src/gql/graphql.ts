@@ -354,14 +354,21 @@ export type CollectionsGetListQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type CollectionsGetListQuery = { collections: { data: Array<{ name: string, description: string, slug: string }> } };
 
-export type OrderFragment = { id: string, createdAt: unknown, totalAmount: number, lines: unknown, status: OrderStatus };
+export type OrderFragment = { id: string, createdAt: unknown, totalAmount: number, lines: unknown, status: OrderStatus, updatedAt: unknown };
+
+export type OrderGetByIdQueryVariables = Exact<{
+  orderId: Scalars['ID']['input'];
+}>;
+
+
+export type OrderGetByIdQuery = { order?: { id: string, createdAt: unknown, totalAmount: number, lines: unknown, status: OrderStatus, updatedAt: unknown } | null };
 
 export type OrdersGetByEmailQueryVariables = Exact<{
   email: Scalars['String']['input'];
 }>;
 
 
-export type OrdersGetByEmailQuery = { orders: { data: Array<{ id: string, createdAt: unknown, totalAmount: number, lines: unknown, status: OrderStatus }> } };
+export type OrdersGetByEmailQuery = { orders: { data: Array<{ id: string, createdAt: unknown, totalAmount: number, lines: unknown, status: OrderStatus, updatedAt: unknown }> } };
 
 export type ProductCreateReviewMutationVariables = Exact<{
   productId: Scalars['ID']['input'];
@@ -512,6 +519,7 @@ export const OrderFragmentDoc = new TypedDocumentString(`
   totalAmount
   lines
   status
+  updatedAt
 }
     `, {"fragmentName":"Order"}) as unknown as TypedDocumentString<OrderFragment, unknown>;
 export const ProductFragmentDoc = new TypedDocumentString(`
@@ -759,6 +767,20 @@ export const CollectionsGetListDocument = new TypedDocumentString(`
     slug
   }
 }`) as unknown as TypedDocumentString<CollectionsGetListQuery, CollectionsGetListQueryVariables>;
+export const OrderGetByIdDocument = new TypedDocumentString(`
+    query OrderGetById($orderId: ID!) {
+  order(id: $orderId) {
+    ...Order
+  }
+}
+    fragment Order on Order {
+  id
+  createdAt
+  totalAmount
+  lines
+  status
+  updatedAt
+}`) as unknown as TypedDocumentString<OrderGetByIdQuery, OrderGetByIdQueryVariables>;
 export const OrdersGetByEmailDocument = new TypedDocumentString(`
     query OrdersGetByEmail($email: String!) {
   orders(email: $email) {
@@ -773,6 +795,7 @@ export const OrdersGetByEmailDocument = new TypedDocumentString(`
   totalAmount
   lines
   status
+  updatedAt
 }`) as unknown as TypedDocumentString<OrdersGetByEmailQuery, OrdersGetByEmailQueryVariables>;
 export const ProductCreateReviewDocument = new TypedDocumentString(`
     mutation ProductCreateReview($productId: ID!, $author: String!, $description: String!, $email: String!, $rating: Int!, $title: String!) {

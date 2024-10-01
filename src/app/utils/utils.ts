@@ -100,3 +100,7 @@ export const executeGraphql = async <TResult, TVariables>({
 
 	return graphqlResponse.data;
 };
+
+export const formatDate = (dateString: string) => {
+	return `${new Date(String(dateString)).getDate()}.${new Date(String(dateString)).getMonth() + 1}.${new Date(String(dateString)).getFullYear()}`;
+};
