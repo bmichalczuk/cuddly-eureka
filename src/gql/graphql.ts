@@ -283,6 +283,14 @@ export type CartAddProductMutationVariables = Exact<{
 
 export type CartAddProductMutation = { cartAddItem: { id: string, items: Array<{ quantity: number, product: { id: string, name: string, price: number, rating?: number | null, description: string, images: Array<{ url: string, alt: string }>, categories: Array<{ name: string }> } }> } };
 
+export type CartCompleteMutationVariables = Exact<{
+  cartId: Scalars['ID']['input'];
+  userEmail: Scalars['String']['input'];
+}>;
+
+
+export type CartCompleteMutation = { cartComplete: { id: string, lines: unknown, status: OrderStatus, totalAmount: number, updatedAt: unknown, createdAt: unknown } };
+
 export type CartCreateMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']['input']>;
 }>;
@@ -345,6 +353,22 @@ export type CollectionsGetListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type CollectionsGetListQuery = { collections: { data: Array<{ name: string, description: string, slug: string }> } };
+
+export type OrderFragment = { id: string, createdAt: unknown, totalAmount: number, lines: unknown, status: OrderStatus, updatedAt: unknown };
+
+export type OrderGetByIdQueryVariables = Exact<{
+  orderId: Scalars['ID']['input'];
+}>;
+
+
+export type OrderGetByIdQuery = { order?: { id: string, createdAt: unknown, totalAmount: number, lines: unknown, status: OrderStatus, updatedAt: unknown } | null };
+
+export type OrdersGetByEmailQueryVariables = Exact<{
+  email: Scalars['String']['input'];
+}>;
+
+
+export type OrdersGetByEmailQuery = { orders: { data: Array<{ id: string, createdAt: unknown, totalAmount: number, lines: unknown, status: OrderStatus, updatedAt: unknown }> } };
 
 export type ProductCreateReviewMutationVariables = Exact<{
   productId: Scalars['ID']['input'];
@@ -488,6 +512,16 @@ export const CollectionFragmentDoc = new TypedDocumentString(`
   }
 }
     `, {"fragmentName":"Collection"}) as unknown as TypedDocumentString<CollectionFragment, unknown>;
+export const OrderFragmentDoc = new TypedDocumentString(`
+    fragment Order on Order {
+  id
+  createdAt
+  totalAmount
+  lines
+  status
+  updatedAt
+}
+    `, {"fragmentName":"Order"}) as unknown as TypedDocumentString<OrderFragment, unknown>;
 export const ProductFragmentDoc = new TypedDocumentString(`
     fragment Product on Product {
   id
@@ -574,6 +608,18 @@ export const CartAddProductDocument = new TypedDocumentString(`
     name
   }
 }`) as unknown as TypedDocumentString<CartAddProductMutation, CartAddProductMutationVariables>;
+export const CartCompleteDocument = new TypedDocumentString(`
+    mutation CartComplete($cartId: ID!, $userEmail: String!) {
+  cartComplete(cartId: $cartId, userEmail: $userEmail) {
+    id
+    lines
+    status
+    totalAmount
+    updatedAt
+    createdAt
+  }
+}
+    `) as unknown as TypedDocumentString<CartCompleteMutation, CartCompleteMutationVariables>;
 export const CartCreateDocument = new TypedDocumentString(`
     mutation CartCreate($id: ID) {
   cartFindOrCreate(input: {}, id: $id) {
@@ -721,6 +767,36 @@ export const CollectionsGetListDocument = new TypedDocumentString(`
     slug
   }
 }`) as unknown as TypedDocumentString<CollectionsGetListQuery, CollectionsGetListQueryVariables>;
+export const OrderGetByIdDocument = new TypedDocumentString(`
+    query OrderGetById($orderId: ID!) {
+  order(id: $orderId) {
+    ...Order
+  }
+}
+    fragment Order on Order {
+  id
+  createdAt
+  totalAmount
+  lines
+  status
+  updatedAt
+}`) as unknown as TypedDocumentString<OrderGetByIdQuery, OrderGetByIdQueryVariables>;
+export const OrdersGetByEmailDocument = new TypedDocumentString(`
+    query OrdersGetByEmail($email: String!) {
+  orders(email: $email) {
+    data {
+      ...Order
+    }
+  }
+}
+    fragment Order on Order {
+  id
+  createdAt
+  totalAmount
+  lines
+  status
+  updatedAt
+}`) as unknown as TypedDocumentString<OrdersGetByEmailQuery, OrdersGetByEmailQueryVariables>;
 export const ProductCreateReviewDocument = new TypedDocumentString(`
     mutation ProductCreateReview($productId: ID!, $author: String!, $description: String!, $email: String!, $rating: Int!, $title: String!) {
   reviewCreate(

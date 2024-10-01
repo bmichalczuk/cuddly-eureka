@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { Suspense } from "react";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+
 import { SiteNavbar } from "../molecules/SiteNavbar";
 import { SearchProductInput } from "../atoms/SearchProductInput";
 import { CartLink } from "../atoms/CartLink";
@@ -17,6 +19,12 @@ export function SiteHeader() {
 			</Suspense>
 
 			<CartLink />
+			<SignedIn>
+				<UserButton userProfileMode="navigation" userProfileUrl="" />
+			</SignedIn>
+			<SignedOut>
+				<SignInButton />
+			</SignedOut>
 		</header>
 	);
 }
