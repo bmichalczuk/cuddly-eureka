@@ -1,0 +1,11 @@
+query ProductGetImages($productId: ID) {
+	product(id: $productId) {
+		images {
+			alt
+			height
+			id
+			url
+			width
+		}
+	}
+}

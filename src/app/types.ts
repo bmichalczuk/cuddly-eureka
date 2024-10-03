@@ -17,3 +17,12 @@ export enum ProductsCategories {
 	"t-shirts" = 3,
 	"all" = "all",
 }
+
+export type linesType = {
+	cartId: string;
+	productQuantity: number;
+	productId: number;
+	productName: string;
+	productSlug: string;
+	productPrice: number;
+}[];
