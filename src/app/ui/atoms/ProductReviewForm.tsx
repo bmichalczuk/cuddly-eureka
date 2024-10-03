@@ -22,7 +22,7 @@ export const ProductReviewForm = ({
 			></textarea>
 			<h4>Email adress:</h4>
 			<input required className="mb-5 border  border-slate-500  p-3" type="email" name="email" />
-			<h4>Your mame:</h4>
+			<h4>Your name:</h4>
 			<input required className="mb-5 border  border-slate-500  p-3" type="text" name="name" />
 			<h4>Rate product:</h4>
 			<select required name="rating" className="border border-slate-700 p-1">

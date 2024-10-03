@@ -35,6 +35,7 @@ const documents = {
     "mutation ProductCreateReview($productId: ID!, $author: String!, $description: String!, $email: String!, $rating: Int!, $title: String!) {\n  reviewCreate(\n    author: $author\n    description: $description\n    email: $email\n    productId: $productId\n    rating: $rating\n    title: $title\n  ) {\n    id\n  }\n}": types.ProductCreateReviewDocument,
     "fragment Product on Product {\n  id\n  images {\n    url\n    alt\n  }\n  name\n  price\n  rating\n  description\n  categories {\n    name\n  }\n}": types.ProductFragmentDoc,
     "query ProductGetById($id: ID) {\n  product(id: $id) {\n    ...Product\n  }\n}": types.ProductGetByIdDocument,
+    "query ProductGetImages($productId: ID) {\n  product(id: $productId) {\n    images {\n      alt\n      height\n      id\n      url\n      width\n    }\n  }\n}": types.ProductGetImagesDocument,
     "query ProductGetReviews($productId: ID) {\n  product(id: $productId) {\n    reviews {\n      ...Review\n    }\n  }\n}": types.ProductGetReviewsDocument,
     "fragment ProductListItem on Product {\n  id\n  name\n  rating\n  images {\n    alt\n    url\n  }\n  categories {\n    name\n  }\n  price\n}": types.ProductListItemFragmentDoc,
     "fragment ProductsSearch on Product {\n  ...ProductListItem\n}": types.ProductsSearchFragmentDoc,
@@ -128,6 +129,10 @@ export function graphql(source: "fragment Product on Product {\n  id\n  images {
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "query ProductGetById($id: ID) {\n  product(id: $id) {\n    ...Product\n  }\n}"): typeof import('./graphql').ProductGetByIdDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query ProductGetImages($productId: ID) {\n  product(id: $productId) {\n    images {\n      alt\n      height\n      id\n      url\n      width\n    }\n  }\n}"): typeof import('./graphql').ProductGetImagesDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -391,6 +391,13 @@ export type ProductGetByIdQueryVariables = Exact<{
 
 export type ProductGetByIdQuery = { product?: { id: string, name: string, price: number, rating?: number | null, description: string, images: Array<{ url: string, alt: string }>, categories: Array<{ name: string }> } | null };
 
+export type ProductGetImagesQueryVariables = Exact<{
+  productId?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+
+export type ProductGetImagesQuery = { product?: { images: Array<{ alt: string, height: number, id: string, url: string, width: number }> } | null };
+
 export type ProductGetReviewsQueryVariables = Exact<{
   productId?: InputMaybe<Scalars['ID']['input']>;
 }>;
@@ -831,6 +838,19 @@ export const ProductGetByIdDocument = new TypedDocumentString(`
     name
   }
 }`) as unknown as TypedDocumentString<ProductGetByIdQuery, ProductGetByIdQueryVariables>;
+export const ProductGetImagesDocument = new TypedDocumentString(`
+    query ProductGetImages($productId: ID) {
+  product(id: $productId) {
+    images {
+      alt
+      height
+      id
+      url
+      width
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<ProductGetImagesQuery, ProductGetImagesQueryVariables>;
 export const ProductGetReviewsDocument = new TypedDocumentString(`
     query ProductGetReviews($productId: ID) {
   product(id: $productId) {
