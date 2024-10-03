@@ -7,20 +7,12 @@ import { type Route } from "next";
 import { getOrderById } from "../../../api/orders";
 import { getProductImages } from "../../../api/product";
 import { formatPrice, formatDate } from "@/utils/utils";
+import { type linesType } from "@/types";
 export default async function OrderDetailsPage({ params }: { params: { orderId: string } }) {
 	const user = await currentUser();
 	if (!user) {
 		redirect("/sign-in");
 	}
-
-	type linesType = {
-		cartId: string;
-		productQuantity: number;
-		productId: number;
-		productName: string;
-		productSlug: string;
-		productPrice: number;
-	}[];
 
 	const order = await getOrderById(params.orderId);
 	const products = await Promise.all(
