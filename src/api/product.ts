@@ -2,6 +2,7 @@ import {
 	ProductCreateReviewDocument,
 	ProductGetReviewsDocument,
 	type ProductFragment,
+	ProductGetImagesDocument,
 } from "../gql/graphql";
 import { executeGraphql } from "@/utils/utils";
 
@@ -42,4 +43,18 @@ export const getProductReviews = async (productId: ProductFragment["id"]) => {
 		throw new TypeError("GraphQL error: no such product");
 	}
 	return res.product.reviews;
+};
+
+export const getProductImages = async (productId: ProductFragment["id"]) => {
+	const res = await executeGraphql({
+		query: ProductGetImagesDocument,
+		variables: {
+			productId: productId,
+		},
+		next: { tags: ["reviews"] },
+	});
+	if (!res.product) {
+		throw new TypeError("GraphQL error: no such product");
+	}
+	return res.product.images;
 };
