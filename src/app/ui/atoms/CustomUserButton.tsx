@@ -17,6 +17,9 @@ export default function Home() {
 				<UserButton.MenuItems>
 					<UserButton.Link label="See your orders" labelIcon={<DotIcon />} href="/orders" />
 				</UserButton.MenuItems>
+				<UserButton.MenuItems>
+					<UserButton.Link label="Contact" labelIcon={<DotIcon />} href="/contact" />
+				</UserButton.MenuItems>
 			</UserButton>
 		</header>
 	);

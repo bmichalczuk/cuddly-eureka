@@ -6,7 +6,7 @@ import { contactAction } from "./contactAction";
 import { Button } from "@/ui/atoms/Button";
 
 export const ContactForm = () => {
-	const [state, action] = useFormState((_prevState: unknown, formData: FormData) => {
+	const [_state, action] = useFormState((_prevState: unknown, formData: FormData) => {
 		return contactAction(formData);
 	}, null);
 
@@ -44,19 +44,3 @@ export const ContactForm = () => {
 		</form>
 	);
 };
-/*<h4>Title:</h4>
-			<input required className="mb-5 border border-slate-500  p-3" type="text" name="headline" />
-			<h4>Opinion:</h4>
-			
-			<h4>Email adress:</h4>
-			<input required className="mb-5 border  border-slate-500  p-3" type="email" name="email" />
-			<h4>Your name:</h4>
-			<input required className="mb-5 border  border-slate-500  p-3" type="text" name="name" />
-			<h4>Rate product:</h4>
-			<select required name="rating" className="border border-slate-700 p-1">
-				<option value="1">1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-				<option value="5">5</option>
-			</select>*/
